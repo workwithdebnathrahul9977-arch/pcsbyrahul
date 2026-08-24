@@ -124,129 +124,111 @@ export default function PublicLayout({
         {children}
       </main>
 
-      {/* Premium Global Footer */}
-      <footer className="bg-gradient-to-b from-[#260101] to-[#1a0505] border-t border-red-900/30 pt-10 md:pt-14 pb-8 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+﻿      {/* Premium Global Footer */}
+      <footer className="bg-[#0a0a0a] border-t-[3px] border-red-600 pt-16 pb-8 mt-auto relative overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          {/* Top Half: Social Links */}
-          <div className="text-center mb-10">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-300 mb-2">
+          {/* Top CTA */}
+          <div className="text-center mb-16 max-w-2xl mx-auto">
+            <h2 className="text-lg md:text-xl font-medium text-gray-400 mb-2">
               আমাদের ক্লাসগুলোতে অংশ নিতে এবং সবসময় আপডেট থাকতে,
             </h2>
-            <h3 className="text-2xl md:text-4xl font-black text-white mb-4">
+            <h3 className="text-3xl md:text-4xl font-black text-white">
               যুক্ত হোন <span className="text-red-500">আমাদের সাথে</span>
             </h3>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 w-full mx-auto">
-              
-              {/* YouTube */}
-              <a href="#" className="bg-black/20 p-3 md:p-4 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center justify-between group hover:bg-black/40 transition-all duration-300">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-red-500 flex items-center justify-center text-lg md:text-xl mr-3 group-hover:bg-red-600 group-hover:text-white transition-colors">
-                    <i className="fa-brands fa-youtube"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[14px] md:text-[15px] leading-tight mb-0.5 group-hover:text-red-400 transition-colors">ফ্রি প্লে-লিস্ট</h4>
-                    <p className="text-xs md:text-sm text-gray-400 font-medium">ইউটিউব চ্যানেল</p>
-                  </div>
-                </div>
-              </a>
-
-              {/* FB Group */}
-              <a href="#" className="bg-black/20 p-3 md:p-4 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center justify-between group hover:bg-black/40 transition-all duration-300">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-blue-400 flex items-center justify-center text-lg md:text-xl mr-3 group-hover:bg-blue-500 group-hover:text-white transition-colors">
-                    <i className="fa-brands fa-facebook-f"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[14px] md:text-[15px] leading-tight mb-0.5 group-hover:text-blue-400 transition-colors">অফিসিয়াল গ্রুপ</h4>
-                    <p className="text-xs md:text-sm text-gray-400 font-medium">ফেইসবুক</p>
-                  </div>
-                </div>
-              </a>
-
-              {/* Instagram */}
-              <a href="#" className="bg-black/20 p-3 md:p-4 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center justify-between group hover:bg-black/40 transition-all duration-300">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 text-pink-400 flex items-center justify-center text-lg md:text-xl mr-3 border border-white/5 group-hover:bg-gradient-to-r group-hover:from-purple-500 group-hover:to-pink-500 group-hover:text-white transition-colors">
-                    <i className="fa-brands fa-instagram"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[14px] md:text-[15px] leading-tight mb-0.5 group-hover:text-pink-400 transition-colors">ইন্সটাগ্রাম</h4>
-                    <p className="text-xs md:text-sm text-gray-400 font-medium">অফিসিয়াল প্রোফাইল</p>
-                  </div>
-                </div>
-              </a>
-
-              {/* FB Page */}
-              <a href="#" className="bg-black/20 p-3 md:p-4 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center justify-between group hover:bg-black/40 transition-all duration-300">
-                <div className="flex items-center">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/40 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-blue-400 flex items-center justify-center text-lg md:text-xl mr-3 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                    <i className="fa-brands fa-facebook"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[14px] md:text-[15px] leading-tight mb-0.5 group-hover:text-blue-400 transition-colors">অফিসিয়াল পেইজ</h4>
-                    <p className="text-xs md:text-sm text-gray-400 font-medium">ফেইসবুক</p>
-                  </div>
-                </div>
-              </a>
-
-            </div>
           </div>
-
-          {/* Bottom Half: Footer Columns */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-8 mb-10 max-w-5xl mx-auto">
+  
+          {/* Main Footer Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-16">
             
-            {/* Col 1: Brand - Span 2 */}
-            <div className="col-span-2 md:col-span-2 pr-0 md:pr-12">
-              <img src="/logo.png" alt="PhysChemia" className="h-12 w-auto mb-4 brightness-0 invert" />
-              <p className="text-sm text-gray-400 leading-relaxed max-w-md">
+            {/* Brand & Social (Span 4) */}
+            <div className="lg:col-span-4 pr-0 md:pr-10">
+              <img src="/logo.png" alt="PhysChemia" className="h-12 w-auto mb-6 brightness-0 invert" />
+              <p className="text-sm text-gray-400 leading-relaxed mb-8">
                 বাংলাদেশের সবচেয়ে আধুনিক অফলাইন ও অনলাইন শিক্ষা প্ল্যাটফর্ম। SSC ও HSC প্রস্তুতিতে সেরা মেন্টরশিপ পাও আমাদের সাথে।
               </p>
+              <div className="flex items-center space-x-3">
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 shadow-lg group">
+                  <i className="fa-brands fa-youtube group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 shadow-lg group">
+                  <i className="fa-brands fa-facebook-f group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-pink-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 shadow-lg group">
+                  <i className="fa-brands fa-instagram group-hover:scale-110 transition-transform"></i>
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 shadow-lg group">
+                  <i className="fa-brands fa-facebook group-hover:scale-110 transition-transform"></i>
+                </a>
+              </div>
             </div>
-
-            {/* Col 2: Support */}
-            <div>
-              <h3 className="text-[15px] font-bold text-white mb-4">সাপোর্ট</h3>
-              <ul className="space-y-4 text-[13px] text-gray-200">
-                <li><Link href="/admission" className="hover:text-red-400 transition-colors">ভর্তির নিয়ম</Link></li>
-                <li><Link href="/refund" className="hover:text-red-400 transition-colors">রিফান্ড পলিসি</Link></li>
-                <li><Link href="/terms" className="hover:text-red-400 transition-colors">টার্মস</Link></li>
-                <li><Link href="/privacy" className="hover:text-red-400 transition-colors">প্রাইভেসি</Link></li>
-                <li><Link href="/faq" className="hover:text-red-400 transition-colors">FAQ</Link></li>
+  
+            {/* Links 1 (Span 2) */}
+            <div className="lg:col-span-2">
+              <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
+                গুরুত্বপূর্ণ লিংক
+                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
+              </h3>
+              <ul className="space-y-3 text-sm text-gray-400">
+                <li><Link href="/" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>হোমপেজ</Link></li>
+                <li><Link href="/courses" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>কোর্সসমূহ</Link></li>
+                <li><Link href="/about" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>আমাদের সম্পর্কে</Link></li>
+                <li><Link href="/gallery" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>গ্যালারি</Link></li>
               </ul>
             </div>
 
-            {/* Col 3: Contact */}
-            <div>
-              <h3 className="text-[15px] font-bold text-white mb-4">যোগাযোগ</h3>
-              <ul className="space-y-4 text-[13px] text-gray-200">
+            {/* Support (Span 3) */}
+            <div className="lg:col-span-3">
+              <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
+                সাপোর্ট
+                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
+              </h3>
+              <ul className="space-y-3 text-sm text-gray-400">
+                <li><Link href="/admission" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>ভর্তির নিয়ম</Link></li>
+                <li><Link href="/refund" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>রিফান্ড পলিসি</Link></li>
+                <li><Link href="/terms" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>শর্তাবলী</Link></li>
+                <li><Link href="/privacy" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>প্রাইভেসি পলিসি</Link></li>
+                <li><Link href="/faq" className="hover:text-red-400 hover:translate-x-1 inline-block transition-transform"><i className="fa-solid fa-angle-right text-xs mr-2 text-red-500"></i>FAQ</Link></li>
+              </ul>
+            </div>
+  
+            {/* Contact (Span 3) */}
+            <div className="lg:col-span-3">
+              <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
+                যোগাযোগ
+                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
+              </h3>
+              <ul className="space-y-4 text-sm text-gray-400">
                 <li className="flex items-start">
-                  <i className="fa-regular fa-envelope mt-1 w-5 text-red-500"></i>
+                  <i className="fa-solid fa-envelope mt-1 mr-3 w-4 text-red-500"></i>
                   <span>contact@physchemia.com<br/>info@physchemia.com</span>
                 </li>
                 <li className="flex items-center">
-                  <i className="fa-solid fa-phone w-5 text-red-500"></i>
-                  <span>০১৭৮৮-৫২২৩৯০</span>
+                  <i className="fa-solid fa-phone mr-3 w-4 text-red-500"></i>
+                  <span>01788-522363</span>
                 </li>
                 <li className="flex items-center">
-                  <i className="fa-brands fa-whatsapp w-5 text-red-500"></i>
+                  <i className="fa-brands fa-whatsapp mr-3 w-4 text-red-500 text-base"></i>
                   <span>WhatsApp</span>
                 </li>
-                <li className="flex items-start group">
-                  <i className="fa-solid fa-location-dot mt-1 w-5 text-red-500 group-hover:text-red-400 transition-colors"></i>
-                  <a href="https://share.google/k3pki6PdY1T9EFxb9" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors">
-                    কোর্ট-পয়েন্ট (হাফিজা খাতুন স্কুলের সামনে) ৩য় তলা, শাহমোস্তফা রোড, মৌলভীবাজার, Moulvibazar 3200
+                <li className="flex items-start">
+                  <i className="fa-solid fa-location-dot mt-1 mr-3 w-4 text-red-500"></i>
+                  <a href="https://share.google/k3pki6PdY1T9EFxb9" target="_blank" rel="noopener noreferrer" className="hover:text-red-400 transition-colors leading-relaxed">
+                    কেটি-পয়েন্ট (হবিগঞ্জ খাতুন স্কুলের সামনে) ৩য় তলা, শাহমোস্তফা রোড, মৌলভীবাজার 3200
                   </a>
                 </li>
               </ul>
             </div>
             
           </div>
-
-          <div className="border-t border-red-900/30 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+  
+          {/* Copyright */}
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
             <p className="mb-4 md:mb-0">
-              © 2026 <span className="font-bold text-gray-400">PhysChemia</span>. সর্বস্বত্ব সংরক্ষিত।
+              &copy; 2026 <span className="font-bold text-gray-300">PhysChemia</span>. সর্বস্বত্ব সংরক্ষিত।
             </p>
             <p className="flex items-center">
               Developed by <a href="#" className="ml-1 text-red-500 font-bold hover:underline">Team Nexa</a>
@@ -254,6 +236,7 @@ export default function PublicLayout({
           </div>
         </div>
       </footer>
+
     </>
   )
 }
