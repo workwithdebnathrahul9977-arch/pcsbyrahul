@@ -154,10 +154,6 @@ export default function PublicLayout({
   
             {/* Social Cards Stacked */}
             <div className="md:col-span-1 lg:pl-6">
-              <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
-                আমাদের সাথে যুক্ত থাকুন
-                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
-              </h3>
               <div className="flex flex-col space-y-4">
                 
                 {/* YouTube */}
