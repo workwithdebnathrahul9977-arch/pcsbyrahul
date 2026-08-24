@@ -204,7 +204,7 @@ export default function PublicLayout({
               <ul className="space-y-4 text-sm text-gray-400">
                 <li className="flex items-start">
                   <i className="fa-solid fa-envelope mt-1 mr-3 w-4 text-red-500"></i>
-                  <span>contact@physchemia.com<br/>info@physchemia.com</span>
+                  <span>pcssupport@gmail.com</span>
                 </li>
                 <li className="flex items-center">
                   <i className="fa-solid fa-phone mr-3 w-4 text-red-500"></i>
