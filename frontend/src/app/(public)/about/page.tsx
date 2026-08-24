@@ -5,12 +5,23 @@ import axios from 'axios';
 export default function About() {
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [sirImage, setSirImage] = useState<string>('');
 
   useEffect(() => {
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/team`)
+    // Fetch team members
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/team`)
       .then(res => setTeamMembers(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
+
+    // Fetch Sir's image from settings
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings/ABOUT_SIR_IMAGE`)
+      .then(res => {
+        if (res.data && res.data.value) {
+          setSirImage(res.data.value);
+        }
+      })
+      .catch(console.error);
   }, []);
 
   return (
@@ -23,9 +34,15 @@ export default function About() {
         
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-red-50 hover:border-red-100 transition-all duration-300 hover:shadow-red-900/5">
           <div className="flex flex-col md:flex-row">
-            <div className="md:w-1/3 bg-gray-200 h-96 md:h-auto flex items-center justify-center relative">
-              {/* Image Placeholder */}
-              <div className="flex flex-col items-center text-gray-400/60"><i className="fa-solid fa-user-tie text-7xl mb-4"></i><span className="text-sm font-bold tracking-widest uppercase">Photo</span></div>
+            <div className="md:w-1/3 bg-gray-200 h-96 md:h-auto flex items-center justify-center relative overflow-hidden">
+              {sirImage ? (
+                <img src={sirImage} alt="Sumel Sir" className="w-full h-full object-cover object-top" />
+              ) : (
+                <div className="flex flex-col items-center text-gray-400/60">
+                  <i className="fa-solid fa-user-tie text-7xl mb-4"></i>
+                  <span className="text-sm font-bold tracking-widest uppercase">Photo</span>
+                </div>
+              )}
             </div>
             <div className="md:w-2/3 p-10 md:p-16">
               <h4 className="text-red-600 font-bold mb-2 uppercase tracking-wider">আমাদের পরিচালক</h4>
