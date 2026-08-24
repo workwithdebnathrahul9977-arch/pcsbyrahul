@@ -124,7 +124,7 @@ export default function PublicLayout({
         {children}
       </main>
 
-﻿﻿      {/* Premium Global Footer */}
+﻿﻿﻿      {/* Premium Global Footer */}
       <footer className="bg-[#0a0a0a] border-t-[3px] border-red-600 pt-16 pb-8 mt-auto relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
@@ -142,84 +142,42 @@ export default function PublicLayout({
           </div>
   
           {/* Main Footer Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 mb-16">
             
-            {/* Brand & Links (Span 4) */}
-            <div className="lg:col-span-4 pr-0 md:pr-4">
+            {/* Brand & Description */}
+            <div className="md:col-span-1 pr-0 lg:pr-4">
               <img src="/logo.png" alt="PhysChemia" className="h-12 w-auto mb-6 brightness-0 invert" />
-              <p className="text-sm text-gray-400 leading-relaxed mb-8">
+              <p className="text-sm text-gray-400 leading-relaxed">
                 বাংলাদেশের সবচেয়ে আধুনিক অফলাইন ও অনলাইন শিক্ষা প্ল্যাটফর্ম। SSC ও HSC প্রস্তুতিতে সেরা মেন্টরশিপ পাও আমাদের সাথে।
               </p>
-              
-              <h3 className="text-white font-bold mb-4 text-lg relative inline-block">
-                গুরুত্বপূর্ণ লিংক
-                <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
-              </h3>
-              <div className="grid grid-cols-2 gap-2 mt-4 text-sm text-gray-400">
-                <Link href="/" className="hover:text-red-400 transition-colors">হোমপেজ</Link>
-                <Link href="/admission" className="hover:text-red-400 transition-colors">ভর্তির নিয়ম</Link>
-                <Link href="/courses" className="hover:text-red-400 transition-colors">কোর্সসমূহ</Link>
-                <Link href="/refund" className="hover:text-red-400 transition-colors">রিফান্ড পলিসি</Link>
-                <Link href="/about" className="hover:text-red-400 transition-colors">আমাদের সম্পর্কে</Link>
-                <Link href="/terms" className="hover:text-red-400 transition-colors">শর্তাবলী</Link>
-                <Link href="/gallery" className="hover:text-red-400 transition-colors">গ্যালারি</Link>
-                <Link href="/privacy" className="hover:text-red-400 transition-colors">প্রাইভেসি</Link>
-              </div>
             </div>
   
-            {/* Social Cards Stacked (Span 4) */}
-            <div className="lg:col-span-4">
-              <div className="flex flex-col space-y-4">
-                
-                {/* YouTube */}
-                <a href="#" className="bg-black/40 p-3 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center group hover:bg-black/60 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-full bg-red-500/20 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-red-500 flex items-center justify-center text-xl mr-4 group-hover:bg-red-500/30 transition-colors">
-                    <i className="fa-brands fa-youtube shadow-none"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[15px] leading-tight mb-1 group-hover:text-red-400 transition-colors">ফ্রি প্লে-লিস্ট</h4>
-                    <p className="text-xs text-gray-400 font-medium">ইউটিউব চ্যানেল</p>
-                  </div>
-                </a>
-
-                {/* FB Group */}
-                <a href="#" className="bg-black/40 p-3 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center group hover:bg-black/60 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-full bg-blue-500/20 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-blue-400 flex items-center justify-center text-xl mr-4 group-hover:bg-blue-500/30 transition-colors">
-                    <i className="fa-brands fa-facebook-f shadow-none"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[15px] leading-tight mb-1 group-hover:text-blue-400 transition-colors">অফিসিয়াল গ্রুপ</h4>
-                    <p className="text-xs text-gray-400 font-medium">ফেইসবুক</p>
-                  </div>
-                </a>
-
-                {/* Instagram */}
-                <a href="#" className="bg-black/40 p-3 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center group hover:bg-black/60 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-full bg-pink-500/20 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-pink-400 flex items-center justify-center text-xl mr-4 group-hover:bg-pink-500/30 transition-colors">
-                    <i className="fa-brands fa-instagram shadow-none"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[15px] leading-tight mb-1 group-hover:text-pink-400 transition-colors">ইনস্টাগ্রাম</h4>
-                    <p className="text-xs text-gray-400 font-medium">অফিসিয়াল প্রোফাইল</p>
-                  </div>
-                </a>
-
-                {/* FB Page */}
-                <a href="#" className="bg-black/40 p-3 rounded-2xl shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-transparent flex items-center group hover:bg-black/60 transition-all duration-300">
-                  <div className="w-12 h-12 rounded-full bg-blue-500/20 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] text-blue-400 flex items-center justify-center text-xl mr-4 group-hover:bg-blue-600/30 transition-colors">
-                    <i className="fa-brands fa-facebook shadow-none"></i>
-                  </div>
-                  <div className="text-left">
-                    <h4 className="font-bold text-white text-[15px] leading-tight mb-1 group-hover:text-blue-400 transition-colors">অফিসিয়াল পেইজ</h4>
-                    <p className="text-xs text-gray-400 font-medium">ফেইসবুক</p>
-                  </div>
-                </a>
-
+            {/* Social Buttons (Replacing Links) */}
+            <div className="md:col-span-1 flex flex-col lg:items-center">
+              <div className="w-full lg:w-max">
+                <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
+                  সোশ্যাল মিডিয়া
+                  <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
+                </h3>
+                <div className="flex items-center space-x-4 mt-2">
+                  <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-red-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all duration-300 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.5)] group">
+                    <i className="fa-brands fa-youtube text-lg group-hover:scale-110 transition-transform"></i>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-blue-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.5)] group">
+                    <i className="fa-brands fa-facebook-f text-lg group-hover:scale-110 transition-transform"></i>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-pink-500 hover:bg-gradient-to-r hover:from-purple-500 hover:to-pink-500 hover:text-white hover:border-pink-500 transition-all duration-300 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.5)] group">
+                    <i className="fa-brands fa-instagram text-lg group-hover:scale-110 transition-transform"></i>
+                  </a>
+                  <a href="#" className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white hover:border-blue-500 transition-all duration-300 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.5)] group">
+                    <i className="fa-brands fa-facebook text-lg group-hover:scale-110 transition-transform"></i>
+                  </a>
+                </div>
               </div>
             </div>
     
-            {/* Contact (Span 4) */}
-            <div className="lg:col-span-4 pl-0 lg:pl-6">
+            {/* Contact */}
+            <div className="md:col-span-1 lg:pl-10">
               <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
                 যোগাযোগ
                 <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
