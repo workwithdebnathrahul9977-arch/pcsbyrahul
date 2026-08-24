@@ -46,13 +46,13 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <section className="bg-gray-50 py-16 md:py-24 relative overflow-hidden border-b border-gray-200">
+    <section className="bg-gradient-to-b from-[#4a0808] to-[#260101] py-16 md:py-24 relative overflow-hidden border-y border-red-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center mb-12">
-          <h2 className="text-2xl md:text-4xl font-black text-gray-900 inline-block relative pb-4">
+          <h2 className="text-2xl md:text-4xl font-black text-white inline-block relative pb-4">
             শিক্ষার্থীদের অভিমত
-            <span className="absolute bottom-0 left-0 w-full h-1 bg-red-600 rounded"></span>
+            <span className="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded"></span>
           </h2>
         </div>
 
@@ -62,14 +62,14 @@ export default function TestimonialSlider() {
             <>
               <button 
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 text-gray-600 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-sm"
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1a0505] hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
               >
                 <i className="fa-solid fa-chevron-left"></i>
               </button>
 
               <button 
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white hover:bg-red-600 border border-gray-200 hover:border-red-600 text-gray-600 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-sm"
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1a0505] hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </button>
@@ -87,7 +87,7 @@ export default function TestimonialSlider() {
                   key={idx} 
                   className="w-full md:w-1/3 flex-shrink-0 px-3"
                 >
-                  <div className="bg-white border border-gray-100 rounded-[20px] p-6 shadow-lg h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:border-red-200 hover:shadow-xl">
+                  <div className="bg-[#1a0505]/80 backdrop-blur-sm border border-red-900/30 rounded-[20px] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:border-red-500/50 hover:shadow-red-900/50 hover:bg-[#1a0505]">
                     
                     <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-tr from-red-600 to-red-400 mb-4 group-hover:scale-110 transition-transform duration-500 shadow-md">
                       <div className="w-full h-full rounded-full overflow-hidden bg-white">
@@ -101,17 +101,17 @@ export default function TestimonialSlider() {
                       </div>
                     </div>
 
-                    <h3 className="text-lg md:text-xl font-black text-gray-900 mb-1 group-hover:text-red-600 transition-colors">{t.name}</h3>
-                    <p className="text-xs md:text-sm text-gray-500 font-medium mb-4">
+                    <h3 className="text-lg md:text-xl font-black text-white mb-1 group-hover:text-red-400 transition-colors">{t.name}</h3>
+                    <p className="text-xs md:text-sm text-red-200/60 font-medium mb-4">
                       {t.school}
                     </p>
 
                     <div className="relative mt-auto pt-4">
-                      <i className="fa-solid fa-quote-left absolute -top-2 left-0 text-2xl text-gray-100 group-hover:text-red-50 transition-colors"></i>
-                      <p className="text-gray-700 font-medium italic text-sm md:text-base leading-relaxed px-4">
+                      <i className="fa-solid fa-quote-left absolute -top-2 left-0 text-2xl text-red-900/40 group-hover:text-red-900/80 transition-colors"></i>
+                      <p className="text-gray-300 font-medium italic text-sm md:text-base leading-relaxed px-4">
                         "{t.opinion}"
                       </p>
-                      <i className="fa-solid fa-quote-right absolute -bottom-2 right-0 text-2xl text-gray-100 group-hover:text-red-50 transition-colors"></i>
+                      <i className="fa-solid fa-quote-right absolute -bottom-2 right-0 text-2xl text-red-900/40 group-hover:text-red-900/80 transition-colors"></i>
                     </div>
 
                   </div>
@@ -128,7 +128,7 @@ export default function TestimonialSlider() {
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
                   className={`h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === idx ? 'w-8 bg-red-600' : 'w-2 bg-gray-300 hover:bg-gray-400'
+                    currentIndex === idx ? 'w-8 bg-red-600' : 'w-2 bg-red-900/40 hover:bg-red-400/60'
                   }`}
                 ></button>
               ))}
