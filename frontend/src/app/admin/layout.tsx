@@ -23,6 +23,7 @@ export default function AdminLayout({
             <Link href="/admin/testimonials" className="block px-4 py-2 rounded hover:bg-gray-700">Student Opinions</Link>
             <Link href="/admin/team" className="block px-4 py-2 rounded hover:bg-gray-700">Team Management</Link>
             <Link href="/admin/gallery" className="block px-4 py-2 rounded hover:bg-gray-700">Success Gallery</Link>
+            <Link href="/admin/albums" className="block px-4 py-2 rounded hover:bg-gray-700">Photo Albums</Link>
             <Link href="/admin/popup" className="block px-4 py-2 rounded hover:bg-gray-700">Popup Management</Link>
             <Link href="/admin/sliders" className="block px-4 py-2 rounded hover:bg-gray-700">Sliders</Link>
             <Link href="/admin/settings" className="block px-4 py-2 rounded hover:bg-gray-700">Settings</Link>

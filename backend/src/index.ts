@@ -19,6 +19,7 @@ import noticeRoutes from './routes/notices';
 import testimonialRoutes from './routes/testimonials';
 import categoryRoutes from './routes/categories';
 import admissionRoutes from './routes/admission';
+import albumRoutes from './routes/album';
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use('/api/notices', noticeRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/admission', admissionRoutes);
+app.use('/api/albums', albumRoutes);
 
 app.get('/', (req, res) => {
   res.send('PhysChemia API is running');
