@@ -86,7 +86,7 @@ export default function TestimonialSlider() {
                 {testimonials.map((t, idx) => (
                   <div 
                     key={idx} 
-                    className="w-full md:w-1/3 flex-shrink-0 px-2 md:px-3"
+                    className="w-full md:w-1/3 flex-shrink-0 px-4 md:px-3"
                   >
                     <div className="bg-[#1a0505] rounded-[1.5rem] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
                       
