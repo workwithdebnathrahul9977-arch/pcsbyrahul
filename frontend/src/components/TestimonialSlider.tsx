@@ -88,7 +88,7 @@ export default function TestimonialSlider() {
                     key={idx} 
                     className="w-full md:w-1/3 flex-shrink-0 px-2 md:px-3"
                   >
-                    <div className="bg-[#1a0505] rounded-[1.5rem] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
+                    <div className="bg-white rounded-[1.5rem] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
                       
                       <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-tr from-red-600 to-red-400 mb-4 group-hover:scale-110 transition-transform duration-500 shadow-md">
                         <div className="w-full h-full rounded-full overflow-hidden bg-white">
@@ -102,13 +102,13 @@ export default function TestimonialSlider() {
                         </div>
                       </div>
 
-                      <h3 className="text-lg md:text-xl font-black text-white mb-1">{t.name}</h3>
-                      <p className="text-xs md:text-sm text-gray-400 font-medium mb-4">
+                      <h3 className="text-lg md:text-xl font-black text-red-700 mb-1">{t.name}</h3>
+                      <p className="text-xs md:text-sm text-gray-500 font-medium mb-4">
                         {t.school}
                       </p>
 
                       <div className="relative mt-auto pt-4">
-                        <p className="text-gray-300 font-medium italic text-sm md:text-base leading-relaxed">
+                        <p className="text-gray-700 font-medium italic text-sm md:text-base leading-relaxed">
                           "{t.opinion}"
                         </p>
                       </div>

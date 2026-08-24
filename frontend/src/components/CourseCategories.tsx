@@ -27,7 +27,7 @@ export default function CourseCategories() {
     <div className="pt-16 md:pt-24 pb-8 md:pb-12">
       <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        <h2 className="text-2xl md:text-4xl font-black text-center text-white mb-10 md:mb-16 relative inline-block left-1/2 -translate-x-1/2 pb-4">
+        <h2 className="text-2xl md:text-4xl font-black text-center text-gray-900 mb-10 md:mb-16 relative inline-block left-1/2 -translate-x-1/2 pb-4">
           কোর্স ক্যাটাগরি
           <span className="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded"></span>
         </h2>
@@ -37,9 +37,9 @@ export default function CourseCategories() {
             <Link 
               href={`/courses?category=${encodeURIComponent(cat.name)}`}
               key={cat.id}
-              className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white/5 backdrop-blur-md rounded-[20px] p-4 shadow-2xl border border-white/10 hover:border-white/30 hover:bg-white/10 hover:-translate-y-1 transition-all duration-300 group block"
+              className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white rounded-[20px] p-4 shadow-xl border border-gray-100 hover:border-red-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group block"
             >
-              <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative mb-5 bg-black/20">
+              <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative mb-5 bg-gray-50">
                 {cat.imageUrl ? (
                   <img 
                     src={cat.imageUrl} 
@@ -48,15 +48,15 @@ export default function CourseCategories() {
                   />
                 ) : (
                   <div className="w-full h-full bg-white/5 flex items-center justify-center">
-                    <i className="fa-solid fa-folder text-4xl text-white/20"></i>
+                    <i className="fa-solid fa-folder text-4xl text-gray-200"></i>
                   </div>
                 )}
                 {/* Overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
               </div>
               
               <div className="text-center pb-3 flex flex-col items-center">
-                <h3 className="font-black text-xl text-white tracking-wide transition-colors duration-300 z-10">
+                <h3 className="font-black text-xl text-gray-900 tracking-wide transition-colors duration-300 z-10">
                   {cat.name}
                 </h3>
                 {/* Glowing line on hover */}

@@ -35,12 +35,12 @@ export default function Home() {
       </section>
 
       {/* Combined Course Categories & Courses Section */}
-      <section className="bg-gradient-to-b from-red-800 to-red-900 border-y border-red-900/30">
+      <section className="bg-white py-4">
         <CourseCategories />
 
         <div className="py-12 md:py-16">
           <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-4xl font-black text-center text-white mb-8 md:mb-12 relative inline-block left-1/2 -translate-x-1/2 pb-4">
+            <h2 className="text-2xl md:text-4xl font-black text-center text-gray-900 mb-8 md:mb-12 relative inline-block left-1/2 -translate-x-1/2 pb-4">
               আমাদের কোর্সসমূহ
               <span className="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded"></span>
             </h2>

@@ -32,34 +32,34 @@ export default function HomeCourses() {
         {courses.map((course) => (
           <div 
             key={course.id} 
-            className="snap-center flex flex-col shrink-0 w-[85vw] sm:w-[280px] md:w-[360px] bg-white/5 backdrop-blur-md rounded-[20px] p-4 shadow-2xl border border-white/10 hover:border-red-500/40 hover:bg-gradient-to-b hover:from-white/10 hover:to-red-900/30 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)] transition-all duration-500 group relative overflow-hidden"
+            className="snap-center flex flex-col shrink-0 w-[85vw] sm:w-[280px] md:w-[360px] bg-white rounded-[20px] p-4 shadow-xl border border-gray-100 hover:border-red-200 hover:shadow-2xl hover:bg-gray-50 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)] transition-all duration-500 group relative overflow-hidden"
           >
             {/* Glowing orb effect on hover inside card */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-red-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
 
-            <div className="h-44 sm:h-48 rounded-xl bg-black/20 flex items-center justify-center relative overflow-hidden shrink-0 mb-4 z-10 border border-white/5 group-hover:border-red-500/20 transition-colors">
+            <div className="h-44 sm:h-48 rounded-xl bg-gray-50 flex items-center justify-center relative overflow-hidden shrink-0 mb-4 z-10 border border-white/5 group-hover:border-red-500/20 transition-colors">
               {course.imageUrl ? (
                 <img src={course.imageUrl} alt={course.title} className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-700" />
               ) : (
                 <span className="text-white/30 font-bold">[Course Banner]</span>
               )}
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1a0101] via-transparent to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-500"></div>
             </div>
             
             <div className="flex flex-col flex-1 z-10">
-              <h3 className="text-xl font-black text-white mb-2 line-clamp-2 leading-snug group-hover:text-red-400 transition-colors drop-shadow-sm">
+              <h3 className="text-xl font-black text-gray-900 mb-2 line-clamp-2 leading-snug group-hover:text-red-400 transition-colors drop-shadow-sm">
                 {course.title}
               </h3>
               
-              <div className="text-gray-300 text-sm mb-6 flex-1 overflow-hidden">
+              <div className="text-gray-600 text-sm mb-6 flex-1 overflow-hidden">
                 <div 
-                  className="line-clamp-3 leading-relaxed editor-content [&_*]:!bg-transparent [&_p]:!text-gray-200 [&_span]:!text-gray-200 [&_li]:!text-gray-200 [&>h1]:!text-red-400 [&>h1]:text-lg [&>h1]:font-bold [&>h2]:!text-red-400 [&>h2]:text-base [&>h2]:font-bold [&>h3]:!text-red-400 [&>p]:mb-2 [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&_strong]:!text-white [&_strong]:font-black [&>em]:italic"
+                  className="line-clamp-3 leading-relaxed editor-content [&_*]:!bg-transparent [&_p]:!text-gray-600 [&_span]:!text-gray-600 [&_li]:!text-gray-600 [&>h1]:!text-red-400 [&>h1]:text-lg [&>h1]:font-bold [&>h2]:!text-red-400 [&>h2]:text-base [&>h2]:font-bold [&>h3]:!text-red-400 [&>p]:mb-2 [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&_strong]:!text-gray-900 [&_strong]:font-black [&>em]:italic"
                   dangerouslySetInnerHTML={{ __html: course.description || "এই কোর্সটি সম্পর্কে আরও বিস্তারিত জানতে ভর্তি বাটনে ক্লিক করুন।" }}
                 />
               </div>
 
-              <div className="mt-auto pt-4 border-t border-white/10 relative">
+              <div className="mt-auto pt-4 border-t border-gray-100 relative">
                 <Link href={`/courses`} className="flex items-center justify-center w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-3 rounded-xl font-black hover:from-red-700 hover:to-red-600 transition shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_20px_rgba(220,38,38,0.5)] group/btn">
                   ভর্তি হোন 
                   <i className="fa-solid fa-chevron-right ml-2 text-sm transition-transform group-hover/btn:translate-x-1"></i>
@@ -73,7 +73,7 @@ export default function HomeCourses() {
       </div>
       
       {/* Helper text for desktop */}
-      <div className="text-center text-sm text-red-200/60 mt-2 hidden md:block">
+      <div className="text-center text-sm text-gray-400 mt-2 hidden md:block">
         <i className="fa-solid fa-arrows-left-right mr-2"></i> আরো কোর্স দেখতে ডানে-বামে স্লাইড করুন
       </div>
     </div>
