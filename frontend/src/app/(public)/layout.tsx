@@ -77,11 +77,11 @@ export default function PublicLayout({
             {/* Right Side: Login & Mobile Menu */}
             <div className="flex items-center space-x-2 md:space-x-3">
               {isLoggedIn ? (
-                <Link href="/dashboard" className="inline-flex items-center justify-center px-2.5 md:px-3 py-1 md:py-1.5 border border-transparent rounded-md md:rounded-lg shadow-sm text-xs md:text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition-all">
+                <Link href="/dashboard" className="inline-flex items-center justify-center px-3 md:px-4 py-1.5 md:py-2 border border-transparent rounded-md md:rounded-lg shadow-sm text-xs md:text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition-all">
                   <i className="fa-regular fa-user mr-1.5"></i> ড্যাশবোর্ড
                 </Link>
               ) : (
-                <Link href="/login" className="inline-flex items-center justify-center px-2.5 md:px-3 py-1 md:py-1.5 border border-transparent rounded-md md:rounded-lg shadow-sm text-xs md:text-sm font-bold text-white bg-[#1a0505] hover:bg-red-700 transition-all">
+                <Link href="/login" className="inline-flex items-center justify-center px-3 md:px-4 py-1.5 md:py-2 border border-transparent rounded-md md:rounded-lg shadow-sm text-xs md:text-sm font-bold text-white bg-red-600 hover:bg-red-700 transition-all">
                   <i className="fa-solid fa-right-to-bracket mr-1.5"></i> লগইন
                 </Link>
               )}
