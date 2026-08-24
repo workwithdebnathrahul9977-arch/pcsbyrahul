@@ -46,7 +46,7 @@ export default function TestimonialSlider() {
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#4a0808] to-[#260101] py-16 md:py-24 relative overflow-hidden border-y border-red-900/30">
+    <section className="bg-gradient-to-b from-red-800 to-red-900 py-16 md:py-24 relative overflow-hidden border-y border-red-900/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         <div className="text-center mb-12">
@@ -62,14 +62,14 @@ export default function TestimonialSlider() {
             <>
               <button 
                 onClick={prevSlide}
-                className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1a0505] hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
+                className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-red-950 hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
               >
                 <i className="fa-solid fa-chevron-left"></i>
               </button>
 
               <button 
                 onClick={nextSlide}
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-[#1a0505] hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-red-950 hover:bg-red-600 border border-red-900/50 hover:border-red-600 text-red-400 hover:text-white flex items-center justify-center transition-all duration-300 z-20 shadow-lg"
               >
                 <i className="fa-solid fa-chevron-right"></i>
               </button>
@@ -87,7 +87,7 @@ export default function TestimonialSlider() {
                   key={idx} 
                   className="w-full md:w-1/3 flex-shrink-0 px-3"
                 >
-                  <div className="bg-[#1a0505]/80 backdrop-blur-sm border border-red-900/30 rounded-[20px] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:border-red-500/50 hover:shadow-red-900/50 hover:bg-[#1a0505]">
+                  <div className="bg-red-950/80 backdrop-blur-sm border border-red-900/30 rounded-[20px] p-6 shadow-xl h-full flex flex-col items-center text-center relative group transition-all duration-500 hover:-translate-y-2 hover:border-red-500/50 hover:shadow-red-900/50 hover:bg-red-950">
                     
                     <div className="w-20 h-20 md:w-24 md:h-24 rounded-full p-1 bg-gradient-to-tr from-red-600 to-red-400 mb-4 group-hover:scale-110 transition-transform duration-500 shadow-md">
                       <div className="w-full h-full rounded-full overflow-hidden bg-white">

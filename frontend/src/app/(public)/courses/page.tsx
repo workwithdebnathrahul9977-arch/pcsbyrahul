@@ -80,7 +80,7 @@ export default function Courses() {
       </div>
 
       {/* Dark Red Gradient Section for Courses Grid */}
-      <div className="flex-1 bg-gradient-to-b from-[#4a0808] via-[#260101] to-[#1a0505] border-y border-red-900/30 py-16">
+      <div className="flex-1 bg-gradient-to-b from-red-800 via-red-900 to-red-950 border-y border-red-900/30 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Courses Grid */}
           {loading ? (

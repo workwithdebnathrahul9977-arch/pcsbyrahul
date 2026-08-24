@@ -78,7 +78,7 @@ export default function About() {
       </section>
 
       {/* Team Section (Dark Theme like Home Courses) */}
-      <section className="bg-gradient-to-b from-[#4a0808] to-[#260101] border-y border-red-900/30 py-16 md:py-24 mb-16">
+      <section className="bg-gradient-to-b from-red-800 to-red-900 border-y border-red-900/30 py-16 md:py-24 mb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
         <div className="text-center mb-16">

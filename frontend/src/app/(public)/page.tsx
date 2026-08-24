@@ -35,7 +35,7 @@ export default function Home() {
       </section>
 
       {/* Combined Course Categories & Courses Section */}
-      <section className="bg-gradient-to-b from-[#4a0808] to-[#260101] border-y border-red-900/30">
+      <section className="bg-gradient-to-b from-red-800 to-red-900 border-y border-red-900/30">
         <CourseCategories />
 
         <div className="py-12 md:py-16">
