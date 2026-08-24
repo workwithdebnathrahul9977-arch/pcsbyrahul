@@ -33,10 +33,10 @@ export default function TrustSection() {
               ].map((text, idx) => (
                 <div 
                   key={idx} 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 lg:p-5 rounded-2xl flex items-center shadow-lg hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 group"
+                  className="bg-black/20 p-4 lg:p-5 rounded-2xl flex items-center shadow-[inset_3px_3px_8px_rgba(0,0,0,0.6),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] hover:bg-black/30 transition-all duration-300 group border border-transparent"
                 >
-                  <div className="w-6 h-6 rounded-full bg-black/40 flex items-center justify-center mr-4 flex-shrink-0 border border-white/5 group-hover:border-red-500/50 transition-colors">
-                    <i className="fa-solid fa-check text-red-500 text-xs"></i>
+                  <div className="w-6 h-6 rounded-full bg-red-500/20 shadow-[inset_1px_1px_3px_rgba(0,0,0,0.5)] flex items-center justify-center mr-4 flex-shrink-0 group-hover:bg-red-500/30 transition-colors">
+                    <i className="fa-solid fa-check text-red-400 text-xs shadow-none"></i>
                   </div>
                   <span className="text-gray-200 font-bold text-sm lg:text-base leading-snug">{text}</span>
                 </div>
