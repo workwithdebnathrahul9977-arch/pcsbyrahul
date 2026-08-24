@@ -1,21 +1,56 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
 export default function AdminPopup() {
   const [formData, setFormData] = useState({
     heading: 'Telegram joining',
     imageUrl: '',
-    subHeading: '🔥 আকর্ষণীয় সব অফার এবং গিভওয়ে 🎁 পেতে যুক্ত থাকুন আমাদের টেলিগ্রাম গ্রুপে 💬',
+    subHeading: 'Welcome to our platform!',
     buttonText: 'JOIN OUR TELEGRAM GROUP FIRST',
     buttonUrl: '#',
     isActive: true
   });
+  
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSave = (e: React.FormEvent) => {
+  // Fetch current popup settings on load
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings/popupSettings`);
+        const data = await res.json();
+        if (data && data.value) {
+          setFormData(JSON.parse(data.value));
+        }
+      } catch (error) {
+        console.error("Failed to fetch popup settings");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate save
-    toast.success('Popup Settings Saved successfully!');
+    const toastId = toast.loading('Saving popup settings...');
+    
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings/popupSettings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ value: JSON.stringify(formData) })
+      });
+      
+      if (res.ok) {
+        toast.success('Popup Settings Saved successfully!', { id: toastId });
+      } else {
+        toast.error('Failed to save settings', { id: toastId });
+      }
+    } catch (error) {
+      toast.error('Network error while saving', { id: toastId });
+    }
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,8 +62,7 @@ export default function AdminPopup() {
 
     const toastId = toast.loading('Uploading image...');
     try {
-      // In Next.js component, fetch from backend port
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/upload`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/upload`, {
         method: 'POST',
         body: formDataObj,
       });
@@ -43,6 +77,8 @@ export default function AdminPopup() {
       toast.error('Network error during upload', { id: toastId });
     }
   };
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div>
@@ -102,11 +138,11 @@ export default function AdminPopup() {
               <div className="flex justify-between items-center p-4 border-b border-gray-100">
                 <h3 className="font-bold text-gray-800 text-lg">{formData.heading || 'Heading'}</h3>
                 <button className="text-gray-400 hover:text-red-500">
-                  <i className="fa-solid fa-xmark text-xl"></i>
+                  <span className="text-xl">&times;</span>
                 </button>
               </div>
 
-              <div className="w-full h-40 bg-gray-200 flex items-center justify-center">
+              <div className="w-full h-40 bg-gray-200 flex items-center justify-center overflow-hidden">
                 {formData.imageUrl ? (
                   <img src={formData.imageUrl} alt="Popup Image" className="w-full h-full object-cover" />
                 ) : (
