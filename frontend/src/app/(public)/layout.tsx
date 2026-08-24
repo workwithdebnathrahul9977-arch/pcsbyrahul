@@ -125,7 +125,7 @@ export default function PublicLayout({
       </main>
 
 ﻿﻿﻿      {/* Premium Global Footer */}
-      <footer className="bg-[#0a0a0a] border-t-[3px] border-red-600 pt-16 pb-8 mt-auto relative overflow-hidden">
+      <footer className="bg-[#1a1a1a] border-t-[3px] border-red-600 pt-16 pb-8 mt-auto relative overflow-hidden">
         {/* Subtle background glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
         
