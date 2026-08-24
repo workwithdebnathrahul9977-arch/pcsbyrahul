@@ -145,7 +145,7 @@ export default function PublicLayout({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 mb-16">
             
             {/* Brand & Description */}
-            <div className="md:col-span-1 pr-0 lg:pr-4">
+            <div className="md:col-span-1 pr-0 lg:pr-4 order-2 md:order-1">
               <img src="/logo.png" alt="PhysChemia" className="h-12 w-auto mb-6 brightness-0 invert" />
               <p className="text-sm text-gray-400 leading-relaxed">
                 বাংলাদেশের সবচেয়ে আধুনিক অফলাইন ও অনলাইন শিক্ষা প্ল্যাটফর্ম। SSC ও HSC প্রস্তুতিতে সেরা মেন্টরশিপ পাও আমাদের সাথে।
@@ -153,7 +153,7 @@ export default function PublicLayout({
             </div>
   
             {/* Social Cards Stacked */}
-            <div className="md:col-span-1 lg:pl-6">
+            <div className="md:col-span-1 lg:pl-6 order-1 md:order-2">
               <div className="flex flex-col space-y-4">
                 
                 {/* YouTube */}
@@ -204,7 +204,7 @@ export default function PublicLayout({
             </div>
     
             {/* Contact */}
-            <div className="md:col-span-1 lg:pl-10">
+            <div className="md:col-span-1 lg:pl-10 order-3">
               <h3 className="text-white font-bold mb-6 text-lg relative inline-block">
                 যোগাযোগ
                 <span className="absolute -bottom-2 left-0 w-1/2 h-0.5 bg-red-600 rounded"></span>
