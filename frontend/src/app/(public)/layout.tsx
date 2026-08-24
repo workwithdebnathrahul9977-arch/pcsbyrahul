@@ -259,7 +259,7 @@ export default function PublicLayout({
               &copy; 2026 <span className="font-bold text-gray-300">PhysChemia</span>. সর্বস্বত্ব সংরক্ষিত।
             </p>
             <p className="flex items-center">
-              Developed by <a href="#" className="ml-1 text-red-500 font-bold hover:underline">Team Nexa</a>
+              Developed by <a href="https://wa.me/8801717855327" target="_blank" rel="noopener noreferrer" className="ml-1 text-red-500 font-bold hover:underline">Team Nexa</a>
             </p>
           </div>
         </div>
