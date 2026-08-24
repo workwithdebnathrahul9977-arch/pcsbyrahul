@@ -32,7 +32,7 @@ export default function NoticeDetails() {
 
   return (
     <div className="bg-gray-50 min-h-screen py-6 md:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="bg-white p-8 md:p-12 rounded-2xl shadow-md border border-gray-200 relative overflow-hidden">
           {/* Decorative Header Accent */}

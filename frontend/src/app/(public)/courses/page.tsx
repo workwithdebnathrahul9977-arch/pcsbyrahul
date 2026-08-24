@@ -37,7 +37,7 @@ export default function Courses() {
     <div className="min-h-screen flex flex-col">
       {/* Light Background Section for Header & Filters */}
       <div className="bg-gray-50 pt-12 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header Section */}
           <div className="text-center mb-10">
             <span className="text-red-600 font-bold tracking-wider uppercase text-sm mb-2 block">Our Programs</span>
@@ -81,7 +81,7 @@ export default function Courses() {
 
       {/* Dark Red Gradient Section for Courses Grid */}
       <div className="flex-1 bg-gradient-to-b from-red-800 via-red-900 to-red-950 border-y border-red-900/30 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Courses Grid */}
           {loading ? (
             <div className="flex justify-center items-center py-20">

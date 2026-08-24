@@ -25,7 +25,7 @@ export default function CourseCategories() {
 
   return (
     <div className="pt-16 md:pt-24 pb-8 md:pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <h2 className="text-2xl md:text-4xl font-black text-center text-white mb-10 md:mb-16 relative inline-block left-1/2 -translate-x-1/2 pb-4">
           কোর্স ক্যাটাগরি

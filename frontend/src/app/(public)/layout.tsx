@@ -26,7 +26,7 @@ export default function PublicLayout({
     <>
       {/* Premium Header (White Glass Effect) */}
       <nav className="fixed w-full top-0 z-[60] bg-white/80 backdrop-blur-lg border-b border-gray-200 transition-all duration-300 shadow-sm">
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="max-w-[1450px] mx-auto px-2 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-24">
             
             {/* Logo (Left on both Mobile & Desktop) */}
@@ -129,7 +129,7 @@ export default function PublicLayout({
         {/* Subtle background glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-600/5 blur-[120px] rounded-full pointer-events-none"></div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Top CTA */}
           <div className="text-center mb-16 max-w-2xl mx-auto">

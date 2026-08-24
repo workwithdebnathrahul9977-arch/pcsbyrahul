@@ -14,7 +14,7 @@ export default function Home() {
       {/* 1. Hero Section */}
       <section className="relative overflow-hidden bg-gray-50 border-b border-gray-100">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-red-100 opacity-50 blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 pt-5 pb-8 md:py-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
+        <div className="max-w-[1450px] mx-auto px-2 sm:px-6 lg:px-8 pt-5 pb-8 md:py-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
           <div className="w-full md:w-5/12 order-2 md:order-1 text-center md:text-left z-10 px-2 md:px-0">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-4 md:mb-6 leading-tight">
               বিজ্ঞানের জটিল বিষয়গুলো <br/><span className="text-red-600">হোক একদম সহজ!</span>
@@ -39,7 +39,7 @@ export default function Home() {
         <CourseCategories />
 
         <div className="py-12 md:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-2xl md:text-4xl font-black text-center text-white mb-8 md:mb-12 relative inline-block left-1/2 -translate-x-1/2 pb-4">
               আমাদের কোর্সসমূহ
               <span className="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded"></span>

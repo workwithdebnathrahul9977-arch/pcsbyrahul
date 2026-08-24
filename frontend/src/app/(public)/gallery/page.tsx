@@ -22,7 +22,7 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div className="py-16 px-4 max-w-7xl mx-auto min-h-screen bg-gray-50/50">
+    <div className="py-16 px-4 max-w-[1450px] mx-auto min-h-screen bg-gray-50/50">
       <div className="text-center mb-16">
         <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">আমাদের গ্যালারী</h1>
         <div className="w-24 h-1.5 bg-red-600 mx-auto rounded-full mb-6"></div>

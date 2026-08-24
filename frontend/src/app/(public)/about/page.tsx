@@ -30,7 +30,7 @@ export default function About() {
       <section className="relative overflow-hidden bg-gray-50 border-b border-gray-100">
         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-red-100 opacity-50 blur-3xl pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 rounded-full bg-red-50 opacity-50 blur-3xl pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+        <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-red-50 hover:border-red-100 transition-all duration-300 hover:shadow-red-900/5">
           <div className="flex flex-col md:flex-row">
@@ -79,7 +79,7 @@ export default function About() {
 
       {/* Team Section (Dark Theme like Home Courses) */}
       <section className="bg-gradient-to-b from-red-800 to-red-900 border-y border-red-900/30 py-16 md:py-24 mb-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
           
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4 relative inline-block pb-4">টিম অব লিডিং
