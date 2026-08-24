@@ -1,0 +1,261 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String?
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enrollments Enrollment[]
+  payments    Payment[]
+  ExamResult  ExamResult[]
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+model Course {
+  id             String   @id @default(uuid())
+  title          String
+  description    String?
+  imageUrl       String?
+  fee            Float
+  originalFee    Float?
+  type           String   @default("Offline")
+  category       String   @default("SSC")
+  paymentType    PaymentType @default(MONTHLY)
+  durationMonths Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  batches Batch[]
+}
+
+enum PaymentType {
+  MONTHLY
+  ONE_TIME
+}
+
+model Batch {
+  id        String   @id @default(uuid())
+  name      String // e.g., "SSC 2025 Offline"
+  schedule  String // e.g., "Sat, Mon, Wed 4:00 PM"
+  courseId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  course      Course       @relation(fields: [courseId], references: [id])
+  enrollments Enrollment[]
+  Exam        Exam[]
+}
+
+model Enrollment {
+  id        String           @id @default(uuid())
+  userId    String
+  batchId   String
+  status    EnrollmentStatus @default(ACTIVE)
+  createdAt DateTime         @default(now())
+
+  user  User  @relation(fields: [userId], references: [id])
+  batch Batch @relation(fields: [batchId], references: [id])
+  payments Payment[]
+
+  @@unique([userId, batchId])
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model Payment {
+  id           String        @id @default(uuid())
+  userId       String
+  enrollmentId String?
+  amount       Float
+  status       PaymentStatus @default(PENDING)
+  month        String? // e.g., "January 2026"
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  user       User        @relation(fields: [userId], references: [id])
+  enrollment Enrollment? @relation(fields: [enrollmentId], references: [id])
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  OVERDUE
+}
+
+model Notice {
+  id        String       @id @default(uuid())
+  title     String
+  content   String
+  target    NoticeTarget @default(ALL)
+  createdAt DateTime     @default(now())
+}
+
+enum NoticeTarget {
+  ALL
+  STUDENTS
+  ADMINS
+}
+
+model SiteSetting {
+  id    String @id @default(uuid())
+  key   String @unique // e.g., "SOCIAL_FACEBOOK", "SOCIAL_YOUTUBE"
+  value String
+}
+
+model HomeSlider {
+  id        String   @id @default(uuid())
+  title     String
+  subtitle  String?
+  imageUrl  String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Gallery {
+  id        String   @id @default(uuid())
+  title     String?
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
+
+model Exam {
+  id        String   @id @default(uuid())
+  title     String // e.g., "Monthly Test - Jan", "Model Test 1"
+  type      ExamType // MONTHLY, MODEL_TEST
+  batchId   String
+  date      DateTime
+  totalMark Float
+
+  batch   Batch        @relation(fields: [batchId], references: [id])
+  results ExamResult[]
+}
+
+enum ExamType {
+  MONTHLY
+  MODEL_TEST
+}
+
+model ExamResult {
+  id     String @id @default(uuid())
+  examId String
+  userId String
+  marks  Float
+
+  exam Exam @relation(fields: [examId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@unique([examId, userId])
+}
+
+model TeamMember {  
+  id        String   @id @default(uuid())  
+  name      String  
+  role      String  
+  imageUrl  String?  
+  phone     String?  
+  facebook  String?  
+  instagram String?
+  whatsapp  String?
+  twitter   String?
+  linkedin  String?
+  bio       String?
+  order     Int      @default(0)  
+  createdAt DateTime @default(now())  
+} 
+
+model GalleryImage {  
+  id        String   @id @default(uuid())  
+  imageUrl  String  
+  createdAt DateTime @default(now())  
+}  
+
+model AdmissionRequest {
+  id               String   @id @default(uuid())
+  photoUrl         String?
+  studentClass     String
+  selectedBatch    String
+  studentName      String
+  studentNickname  String?
+  advisorName      String?
+  advisorMobile    String?
+
+  fatherName       String
+  motherName       String
+  fatherMobile     String
+  motherMobile     String?
+  fatherOccupation String?
+  motherOccupation String?
+
+  presentAddress   String
+  permanentAddress String?
+  dob              String
+  gender           String
+  group            String?
+  bloodGroup       String?
+  religion         String?
+  studentMobile    String
+  guardianMobile   String?
+  schoolName       String
+  schoolRoll       String?
+  subject          String?
+  examsOnly        Boolean  @default(false)
+
+  admissionFee     Float    @default(700)
+  paymentMethod    String
+  transactionId    String
+  signatureUrl     String?
+  
+  status           String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt        DateTime @default(now())
+}
+
+  
+model Setting {  
+  key       String   @id  
+  value     String  
+  updatedAt DateTime @updatedAt  
+} 
+  
+model Slider {  
+  id        String   @id @default(cuid())  
+  imageUrl  String  
+  link      String?  
+  isActive  Boolean  @default(true)  
+  createdAt DateTime @default(now())  
+  updatedAt DateTime @updatedAt  
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  name      String
+  school    String
+  opinion   String
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  imageUrl  String?
+  createdAt DateTime @default(now())
+}
