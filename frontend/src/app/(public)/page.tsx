@@ -4,33 +4,79 @@ import HeroSlider from '@/components/HeroSlider';
 import TrustSection from '@/components/TrustSection';
 import FeaturesSection from '@/components/FeaturesSection';
 import HomeCourses from '@/components/HomeCourses';
+import HomeVideos from '@/components/HomeVideos';
 import TestimonialSlider from '@/components/TestimonialSlider';
 import CourseCategories from '@/components/CourseCategories';
 
-export default function Home() {
+async function getSliders() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/sliders`, { next: { revalidate: 60 } });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (error) {
+    console.error('Failed to fetch sliders server-side:', error);
+    return [];
+  }
+}
+
+export default async function Home() {
+  const initialSliders = await getSliders();
+
   return (
     <div className="bg-white">
       
-      {/* 1. Hero Section */}
-      <section className="relative overflow-hidden bg-gray-50 border-b border-gray-100">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-red-100 opacity-50 blur-3xl pointer-events-none"></div>
-        <div className="max-w-[1450px] mx-auto px-2 sm:px-6 lg:px-8 pt-5 pb-8 md:py-16 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
-          <div className="w-full md:w-5/12 order-2 md:order-1 text-center md:text-left z-10 px-2 md:px-0">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-4 md:mb-6 leading-tight">
-              বিজ্ঞানের জটিল বিষয়গুলো <br/><span className="text-red-600">হোক একদম সহজ!</span>
+      {/* 1. Hero Section (Left-Right Layout) */}
+      <section className="relative bg-white pt-4 md:pt-12 pb-12 md:pb-20 overflow-hidden border-b border-gray-100">
+        
+        {/* Subtle Grid Background Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:30px_30px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0"></div>
+
+        <div className="relative z-10 max-w-[1450px] mx-auto px-3 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8 mt-0 md:mt-8">
+          
+          {/* Text Content (Left Side) */}
+          <div className="w-full lg:w-[48%] flex flex-col items-center lg:items-start text-center lg:text-left z-10 order-2 lg:order-1">
+            
+            {/* Top Pill Badge */}
+            <div className="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-full bg-white border border-red-200 mb-5 md:mb-6 shadow-sm hover:shadow-md transition-all">
+              <span className="flex h-2.5 w-2.5 relative">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-600"></span>
+              </span>
+              <span className="text-sm font-bold text-red-600 uppercase tracking-widest">PhysChemia</span>
+            </div>
+
+            {/* Main Headline */}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.4rem] font-extrabold text-gray-900 leading-[1.3] md:leading-[1.35] mb-5 md:mb-6">
+              স্বপ্নের ক্যারিয়ার গড়তে <br className="hidden lg:block"/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 via-red-500 to-red-600">
+                আমাদের সাথে যুক্ত হোন!
+              </span>
             </h1>
-            <p className="text-lg md:text-xl text-gray-700 font-medium mb-6 md:mb-8 leading-relaxed">
-              PCS-এ A+ পাওয়ার জন্য রয়েছে সঠিক দিকনির্দেশনা, মানসম্মত লেকচার শিট এবং সেরা মেন্টরশিপ। আজই যুক্ত হও।
+            
+            {/* Subheadline */}
+            <p className="text-base md:text-xl text-gray-500 font-medium mb-8 leading-relaxed max-w-2xl px-2 lg:px-0">
+              PCS-এ A+ পাওয়ার সেরা প্ল্যাটফর্ম। এখানে আপনি পাচ্ছেন আধুনিক অফলাইন ও অনলাইন ক্লাস, প্র্যাক্টিক্যাল এক্সপেরিমেন্ট এবং স্পেশাল গাইডলাইন।
             </p>
-            <div className="flex justify-center md:justify-start space-x-4">
-              <Link href="/courses" className="bg-red-600 text-white px-6 md:px-8 py-3 rounded-lg text-base md:text-lg font-bold shadow-lg hover:bg-red-700 transition">
-                কোর্সসমূহ দেখুন
+            
+            {/* Action Buttons */}
+            <div className="flex flex-row flex-wrap items-center justify-center lg:justify-start gap-3 md:gap-4 w-full lg:w-auto">
+              <Link href="/admission" className="bg-red-600 text-white px-5 md:px-8 py-3.5 md:py-4 rounded-xl text-sm md:text-lg font-bold shadow-[0_8px_30px_rgb(220,38,38,0.3)] hover:shadow-[0_8px_30px_rgb(220,38,38,0.5)] hover:bg-red-700 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 flex-1 lg:flex-none">
+                <i className="fa-solid fa-user-plus"></i> এডমিশন নিন
+              </Link>
+              <Link href="/courses" className="bg-white text-gray-800 border border-gray-200 px-5 md:px-8 py-3.5 md:py-4 rounded-xl text-sm md:text-lg font-bold hover:bg-gray-50 hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 shadow-sm flex-1 lg:flex-none">
+                <i className="fa-solid fa-graduation-cap text-red-600"></i> সব কোর্সগুলো
               </Link>
             </div>
           </div>
-          <div className="w-full md:w-7/12 flex justify-center relative order-1 md:order-2 z-10">
-             <HeroSlider />
+
+          {/* Slider Content (Right Side) */}
+          <div className="w-full lg:w-[50%] max-w-[800px] relative z-20 group order-1 lg:order-2 flex justify-center lg:justify-end mb-6 lg:mb-0">
+             {/* Slider Wrapper */}
+             <div className="w-full relative rounded-xl md:rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.01] transition-transform duration-500">
+               <HeroSlider initialSliders={initialSliders} />
+             </div>
           </div>
+          
         </div>
       </section>
 
@@ -40,15 +86,22 @@ export default function Home() {
 
         <div className="py-12 md:py-16">
           <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-4xl font-black text-center text-gray-900 mb-8 md:mb-12 relative inline-block left-1/2 -translate-x-1/2 pb-4">
-              আমাদের কোর্সসমূহ
-              <span className="absolute bottom-0 left-0 w-full h-1 bg-red-500 rounded"></span>
-            </h2>
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-3">
+                আমাদের প্রোগ্রামসমূহ
+              </h2>
+              <div className="inline-flex items-center justify-center gap-2 text-green-600 font-semibold text-base md:text-lg">
+                <i className="fa-regular fa-calendar-days"></i> <span>ভর্তি চলছে (সীমিত আসন)</span>
+              </div>
+            </div>
             
             <HomeCourses />
           </div>
         </div>
       </section>
+
+      {/* Campus Tour / Video Gallery */}
+      <HomeVideos />
 
       {/* Dynamic Success Gallery */}
       <GallerySection />

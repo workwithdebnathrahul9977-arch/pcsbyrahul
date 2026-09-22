@@ -3,6 +3,20 @@ import prisma from '../prismaClient';
 
 const router = express.Router();
 
+router.get('/', async (req, res) => {
+  try {
+    const settings = await prisma.setting.findMany();
+    // Convert array of {key, value} to object {key: value}
+    const settingsObj = settings.reduce((acc, curr) => {
+      acc[curr.key] = curr.value;
+      return acc;
+    }, {} as any);
+    res.json(settingsObj);
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
 router.get('/:key', async (req, res) => {
   try {
     const setting = await prisma.setting.findUnique({

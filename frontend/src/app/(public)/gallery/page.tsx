@@ -22,12 +22,19 @@ export default function Gallery() {
   }, []);
 
   return (
-    <div className="py-16 px-4 max-w-[1450px] mx-auto min-h-screen bg-gray-50/50">
-      <div className="text-center mb-16">
-        <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-4 tracking-tight">আমাদের গ্যালারী</h1>
-        <div className="w-24 h-1.5 bg-red-600 mx-auto rounded-full mb-6"></div>
-        <p className="text-gray-600 max-w-2xl mx-auto text-lg">আমাদের সফলতার পেছনে যারা নিষ্ঠা ও দক্ষতার সাথে কাজ করে সেরা অভিজ্ঞতা নিশ্চিত করছেন, তাদের মুহূর্তগুলো।</p>
-      </div>
+    <div className="bg-[#fef9f9] min-h-screen pb-24 font-sans">
+      <div className="max-w-[1450px] mx-auto px-5 md:px-8 pt-10 md:pt-16">
+        
+        {/* HEADER SECTION */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-red-100 text-red-600 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-4">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-600"></div> GALLERY
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-2">আমাদের গ্যালারী</h1>
+            <p className="text-gray-500 text-sm md:text-base max-w-2xl">আমাদের সফলতার পেছনে যারা নিষ্ঠা ও দক্ষতার সাথে কাজ করে সেরা অভিজ্ঞতা নিশ্চিত করছেন, তাদের মুহূর্তগুলো।</p>
+          </div>
+        </div>
 
       {loading ? (
         <div className="text-center py-20">
@@ -101,6 +108,7 @@ export default function Gallery() {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 }

@@ -36,24 +36,21 @@ router.get('/dashboard', authenticateToken, async (req: AuthRequest, res) => {
             }
           }
         },
+        attendanceRecords: {
+          orderBy: { createdAt: 'desc' },
+          include: { session: true }
+        },
         ExamResult: {
           include: {
-            exam: {
-              include: {
-                batch: {
-                  include: {
-                    course: true
-                  }
-                }
-              }
-            }
+            exam: true
           },
-          orderBy: {
-            exam: {
-              date: 'desc'
-            }
-          }
-        }
+          orderBy: { id: 'desc' },
+          take: 20,
+        },
+        attendances: {
+          orderBy: { date: 'desc' },
+          take: 30,
+        },
       }
     });
 
@@ -63,6 +60,45 @@ router.get('/dashboard', authenticateToken, async (req: AuthRequest, res) => {
   } catch (error) {
     console.error('Dashboard Error:', error);
     res.status(500).json({ error: 'Server error fetching dashboard' });
+  }
+});
+
+router.put('/profile', authenticateToken, async (req: AuthRequest, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) return res.status(401).json({ error: 'Unauthorized' });
+
+    const {
+      name,
+      dob,
+      bloodGroup,
+      presentAddress,
+      permanentAddress,
+      schoolName,
+      religion,
+      gender,
+      whatsapp
+    } = req.body;
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        name,
+        dob,
+        bloodGroup,
+        presentAddress,
+        permanentAddress,
+        schoolName,
+        religion,
+        gender,
+        whatsapp
+      }
+    });
+
+    res.json(updatedUser);
+  } catch (error) {
+    console.error('Update Profile Error:', error);
+    res.status(500).json({ error: 'Failed to update profile' });
   }
 });
 

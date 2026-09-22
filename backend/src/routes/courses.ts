@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
     const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined;
     const courses = await prisma.course.findMany({
       take: limit,
-      orderBy: { createdAt: 'desc' }
+      orderBy: { order: 'asc' }
     });
     res.json(courses);
   } catch (error) {
@@ -19,10 +19,35 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Reorder courses
+router.put('/reorder', async (req, res) => {
+  try {
+    const { courseIds } = req.body; // Array of IDs in the new order
+    if (!Array.isArray(courseIds)) {
+      return res.status(400).json({ error: 'courseIds must be an array' });
+    }
+
+    // Execute all updates in a transaction
+    await prisma.$transaction(
+      courseIds.map((id, index) => 
+        prisma.course.update({
+          where: { id },
+          data: { order: index }
+        })
+      )
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error reordering courses:', error);
+    res.status(500).json({ error: 'Failed to reorder courses' });
+  }
+});
+
 // Create a new course
 router.post('/', async (req, res) => {
   try {
-    const { title, description, imageUrl, fee, originalFee, type, category, paymentType, durationMonths } = req.body;
+    const { title, description, imageUrl, fee, originalFee, type, category, paymentType, durationMonths, academicClassId, academicGroupId, academicSubjectId } = req.body;
     
     if (!title || fee === undefined) {
       return res.status(400).json({ error: 'Title and fee are required' });
@@ -38,7 +63,10 @@ router.post('/', async (req, res) => {
         type: type || 'Offline',
         category: category || 'SSC',
         paymentType: paymentType || 'MONTHLY',
-        durationMonths: durationMonths ? parseInt(durationMonths) : null
+        durationMonths: durationMonths ? parseInt(durationMonths) : null,
+        academicClassId: academicClassId || null,
+        academicGroupId: academicGroupId || null,
+        academicSubjectId: academicSubjectId || null
       }
     });
     res.json(course);
@@ -52,7 +80,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, description, imageUrl, fee, originalFee, type, category, paymentType, durationMonths } = req.body;
+    const { title, description, imageUrl, fee, originalFee, type, category, paymentType, durationMonths, academicClassId, academicGroupId, academicSubjectId } = req.body;
 
     const course = await prisma.course.update({
       where: { id },
@@ -65,7 +93,10 @@ router.put('/:id', async (req, res) => {
         type,
         category,
         paymentType,
-        durationMonths: durationMonths !== undefined ? (durationMonths ? parseInt(durationMonths) : null) : undefined
+        durationMonths: durationMonths !== undefined ? (durationMonths ? parseInt(durationMonths) : null) : undefined,
+        academicClassId: academicClassId !== undefined ? academicClassId : undefined,
+        academicGroupId: academicGroupId !== undefined ? academicGroupId : undefined,
+        academicSubjectId: academicSubjectId !== undefined ? academicSubjectId : undefined
       }
     });
     res.json(course);

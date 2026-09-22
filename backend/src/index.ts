@@ -1,3 +1,5 @@
+import examsRoutes from './routes/exams';
+import feeCategoryRoutes from './routes/feecategories';
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -20,6 +22,12 @@ import testimonialRoutes from './routes/testimonials';
 import categoryRoutes from './routes/categories';
 import admissionRoutes from './routes/admission';
 import albumRoutes from './routes/album';
+import academicRoutes from './routes/academic';
+import dashboardRoutes from './routes/dashboard';
+import accountsRoutes from './routes/accounts';
+import studentsRoutes from './routes/students';
+import videosRoutes from './routes/videos';
+import { protect } from './middleware/auth';
 
 dotenv.config();
 
@@ -48,6 +56,20 @@ app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/admission', admissionRoutes);
 app.use('/api/albums', albumRoutes);
+app.use('/api/academic', academicRoutes);
+app.use('/api/public', require('./routes/public').default);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/accounts', accountsRoutes);
+app.use('/api/students', studentsRoutes);
+app.use('/api/videos', videosRoutes);
+app.use('/api/feecategories', feeCategoryRoutes);
+app.use('/api/exams', examsRoutes);
+app.use('/api/success-stories', require('./routes/successStories').default);
+app.use('/api/support', require('./routes/support').default);
+app.use('/api/admin/support', require('./routes/admin/support').default);
+app.use('/api/admin/attendance', require('./routes/admin/attendance').default);
+app.use('/api/admin/whatsapp', require('./routes/admin/whatsapp').default);
+app.use('/api/admin/notifications', require('./routes/admin/notifications').default);
 
 app.get('/', (req, res) => {
   res.send('PhysChemia API is running');

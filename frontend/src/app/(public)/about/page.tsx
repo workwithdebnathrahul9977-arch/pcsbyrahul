@@ -5,7 +5,7 @@ import axios from 'axios';
 export default function About() {
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sirImage, setSirImage] = useState<string>('');
+  const [settings, setSettings] = useState<any>({});
 
   useEffect(() => {
     // Fetch team members
@@ -14,13 +14,9 @@ export default function About() {
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
 
-    // Fetch Sir's image from settings
-    axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings/ABOUT_SIR_IMAGE`)
-      .then(res => {
-        if (res.data && res.data.value) {
-          setSirImage(res.data.value);
-        }
-      })
+    // Fetch Settings (Director info)
+    axios.get(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/api/settings`)
+      .then(res => setSettings(res.data))
       .catch(console.error);
   }, []);
 
@@ -35,8 +31,8 @@ export default function About() {
         <div className="bg-white rounded-[2rem] shadow-2xl overflow-hidden border border-red-50 hover:border-red-100 transition-all duration-300 hover:shadow-red-900/5">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-1/3 bg-gray-200 h-96 md:h-auto flex items-center justify-center relative overflow-hidden">
-              {sirImage ? (
-                <img src={sirImage} alt="Sumel Sir" className="w-full h-full object-cover object-top" />
+              {settings.DIRECTOR_IMAGE ? (
+                <img src={settings.DIRECTOR_IMAGE} alt="Sumel Sir" className="w-full h-full object-cover object-top" />
               ) : (
                 <div className="flex flex-col items-center text-gray-400/60">
                   <i className="fa-solid fa-user-tie text-7xl mb-4"></i>
@@ -46,30 +42,28 @@ export default function About() {
             </div>
             <div className="md:w-2/3 p-10 md:p-16">
               <h4 className="text-red-600 font-bold mb-2 uppercase tracking-wider">আমাদের পরিচালক</h4>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">— জনাব সুমেল স্যার</h2>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-6">— {settings.DIRECTOR_NAME || 'জনাব সুমেল স্যার'}</h2>
               
-              <div className="space-y-4 text-gray-600 leading-relaxed font-medium">
-                <p>
-                  একজন দক্ষ ও অভিজ্ঞ শিক্ষক, যিনি মৌলভীবাজার জেলার শিক্ষাক্ষেত্রে অসামান্য অবদান রেখে চলেছেন। 
-                  তার অনন্য শিক্ষাদান কৌশল, গভীর বিশ্লেষণধর্মী পদ্ধতি এবং বাস্তব জীবনের উদাহরণ দিয়ে বোঝানোর ক্ষমতা 
-                  শিক্ষার্থীদের মাঝে পদার্থ ও রসায়নের প্রতি ভালোবাসা তৈরি করেছে।
-                </p>
-                <p>
-                  তার শিক্ষাদানের মাধ্যমে অসংখ্য শিক্ষার্থী বিভিন্ন প্রতিযোগিতা ও একাডেমিকে সাফল্য অর্জন করেছে। 
-                  তার দিকনির্দেশনায় শিক্ষার্থীরা বুয়েট, কুয়েট, ঢাকা বিশ্ববিদ্যালয় সহ দেশের শীর্ষস্থানীয় প্রতিষ্ঠানে অধ্যয়ন করছে।
-                </p>
+              <div className="space-y-4 text-gray-600 leading-relaxed font-medium whitespace-pre-line">
+                <p>{settings.DIRECTOR_TEXT || 'একজন দক্ষ ও অভিজ্ঞ শিক্ষক...'}</p>
               </div>
 
               <div className="flex space-x-4 mt-8">
-                <a href="#" className="h-12 w-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm text-xl">
-                  <i className="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#" className="h-12 w-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white transition shadow-sm text-xl">
-                  <i className="fa-brands fa-whatsapp"></i>
-                </a>
-                <a href="#" className="h-12 w-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm text-xl">
-                  <i className="fa-solid fa-phone"></i>
-                </a>
+                {settings.DIRECTOR_FB && (
+                  <a href={settings.DIRECTOR_FB} target="_blank" rel="noopener noreferrer" className="h-12 w-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm text-xl">
+                    <i className="fa-brands fa-facebook-f"></i>
+                  </a>
+                )}
+                {settings.CONTACT_PHONE && (
+                  <a href={`https://wa.me/${settings.CONTACT_PHONE}`} target="_blank" rel="noopener noreferrer" className="h-12 w-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center hover:bg-green-600 hover:text-white transition shadow-sm text-xl">
+                    <i className="fa-brands fa-whatsapp"></i>
+                  </a>
+                )}
+                {settings.CONTACT_PHONE && (
+                  <a href={`tel:${settings.CONTACT_PHONE}`} className="h-12 w-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center hover:bg-blue-600 hover:text-white transition shadow-sm text-xl">
+                    <i className="fa-solid fa-phone"></i>
+                  </a>
+                )}
               </div>
             </div>
           </div>

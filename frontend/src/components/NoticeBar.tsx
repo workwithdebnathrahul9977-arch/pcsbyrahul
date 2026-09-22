@@ -6,27 +6,29 @@ export default function NoticeBar() {
   const [show, setShow] = useState(false);
   const [text, setText] = useState('');
   const [isVisible, setIsVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchNotice = async () => {
       try {
-        const [noticeRes, textRes] = await Promise.all([
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/settings/SHOW_NOTICE`),
-          axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/settings/NOTICE_TEXT`)
-        ]);
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/settings`);
         
-        if (noticeRes.data.value === 'true' && textRes.data.value) {
+        if (data.SHOW_NOTICE === 'true' && data.NOTICE_TEXT) {
           setShow(true);
-          setText(textRes.data.value);
+          setText(data.NOTICE_TEXT);
         }
       } catch (error) {
-        console.error('Failed to load notice settings');
+        console.error('Failed to load top notice', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchNotice();
   }, []);
 
-  if (!show || !isVisible) return null;
+  if (!isVisible) return null;
+
+  if (isLoading || !show) return null;
 
   return (
     <div className="bg-red-600 text-white px-4 py-2 flex items-center justify-between text-sm md:text-base w-full z-[50] relative">

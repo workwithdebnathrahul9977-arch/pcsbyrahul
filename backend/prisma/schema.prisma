@@ -8,6 +8,7 @@ datasource db {
 }
 
 model User {
+  attendanceRecords AttendanceRecord[]
   id        String   @id @default(uuid())
   name      String
   email     String   @unique
@@ -17,31 +18,90 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  // Student profile fields
+  photoUrl         String?
+  gender           String?
+  dob              String?
+  bloodGroup       String?
+  religion         String?
+  presentAddress   String?
+  permanentAddress String?
+  schoolName       String?
+  schoolRoll       String?
+  fatherName       String?
+  fatherMobile     String?
+  fatherOccupation String?
+  motherName       String?
+  motherMobile     String?
+  motherOccupation String?
+  guardianMobile   String?
+  whatsapp         String?
+  studentClass     String?
+  selectedBatch    String?
+  group            String?
+  subject          String?
+
+  // Generated IDs for public search
+  studentId        String? @unique
+  registrationNo   String? @unique
+  registrationYear String?
+
+  // Account status
+  isActive           Boolean   @default(true)
+  deactivatedAt      DateTime?
+  deactivationReason String?
+
   enrollments Enrollment[]
   payments    Payment[]
   ExamResult  ExamResult[]
+  attendances Attendance[]
+}
+
+model Attendance {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  date      DateTime @default(now())
+  status    String   @default("PRESENT") // PRESENT, ABSENT, LATE
+  batchId   String?
+  note      String?
+  createdAt DateTime @default(now())
+
+  @@unique([userId, date])
 }
 
 enum Role {
   ADMIN
+  STAFF
+  TEACHER
   STUDENT
 }
 
 model Course {
-  id             String   @id @default(uuid())
+  id             String      @id @default(uuid())
   title          String
   description    String?
   imageUrl       String?
   fee            Float
   originalFee    Float?
-  type           String   @default("Offline")
-  category       String   @default("SSC")
+  type           String      @default("Offline")
+  category       String      @default("SSC")
   paymentType    PaymentType @default(MONTHLY)
   durationMonths Int?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  order          Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
 
   batches Batch[]
+  exams   Exam[]
+
+  // ERP Links
+  academicClassId   String?
+  academicClass     AcademicClass?   @relation(fields: [academicClassId], references: [id])
+  academicGroupId   String?
+  academicGroup     AcademicGroup?   @relation(fields: [academicGroupId], references: [id])
+  academicSubjectId String?
+  academicSubject   AcademicSubject? @relation(fields: [academicSubjectId], references: [id])
 }
 
 enum PaymentType {
@@ -50,16 +110,30 @@ enum PaymentType {
 }
 
 model Batch {
+  attendanceSessions AttendanceSession[]
   id        String   @id @default(uuid())
   name      String // e.g., "SSC 2025 Offline"
-  schedule  String // e.g., "Sat, Mon, Wed 4:00 PM"
-  courseId  String
+  schedule  String? // e.g., "Sat, Mon, Wed 4:00 PM"
+  courseId  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  course      Course       @relation(fields: [courseId], references: [id])
+  course      Course?      @relation(fields: [courseId], references: [id])
   enrollments Enrollment[]
   Exam        Exam[]
+
+  // New ERP Fields
+  classId       String?
+  academicClass AcademicClass?    @relation(fields: [classId], references: [id])
+  groupId       String?
+  academicGroup AcademicGroup?    @relation(fields: [groupId], references: [id])
+  subjects      AcademicSubject[]
+  sessionYear   String?
+  startingDate  DateTime?
+  closingDate   DateTime?
+  admissionFee  Float             @default(0)
+  tuitionFee    Float             @default(0)
+  courseFee     Float             @default(0)
 }
 
 model Enrollment {
@@ -69,8 +143,8 @@ model Enrollment {
   status    EnrollmentStatus @default(ACTIVE)
   createdAt DateTime         @default(now())
 
-  user  User  @relation(fields: [userId], references: [id])
-  batch Batch @relation(fields: [batchId], references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  batch    Batch     @relation(fields: [batchId], references: [id])
   payments Payment[]
 
   @@unique([userId, batchId])
@@ -82,14 +156,19 @@ enum EnrollmentStatus {
 }
 
 model Payment {
-  id           String        @id @default(uuid())
-  userId       String
-  enrollmentId String?
-  amount       Float
-  status       PaymentStatus @default(PENDING)
-  month        String? // e.g., "January 2026"
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String        @id @default(uuid())
+  userId        String
+  enrollmentId  String?
+  amount        Float
+  status        PaymentStatus @default(PENDING)
+  month         String? // e.g., "January 2026"
+  method        String? // CASH, BKASH, NAGAD, BANK
+  paymentNumber String? // For bKash/Nagad/Bank account number
+  transactionId String? // For external TRX ID
+  note          String?
+  cancelledAt   DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   user       User        @relation(fields: [userId], references: [id])
   enrollment Enrollment? @relation(fields: [enrollmentId], references: [id])
@@ -99,6 +178,7 @@ enum PaymentStatus {
   PENDING
   PAID
   OVERDUE
+  CANCELED
 }
 
 model Notice {
@@ -137,28 +217,70 @@ model Gallery {
   createdAt DateTime @default(now())
 }
 
-model Exam {
+model SuccessStory {
   id        String   @id @default(uuid())
-  title     String // e.g., "Monthly Test - Jan", "Model Test 1"
-  type      ExamType // MONTHLY, MODEL_TEST
-  batchId   String
-  date      DateTime
-  totalMark Float
-
-  batch   Batch        @relation(fields: [batchId], references: [id])
-  results ExamResult[]
+  title     String
+  content   String   @db.Text
+  imageUrl  String?
+  createdAt DateTime @default(now())
 }
 
-enum ExamType {
-  MONTHLY
-  MODEL_TEST
+model CampusVideo {
+  id           String   @id @default(uuid())
+  title        String
+  youtubeUrl   String
+  thumbnailUrl String?
+  order        Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Exam {
+  id                String           @id @default(uuid())
+  title             String // Exam Name
+  topicName         String? // Topic Name
+  academicClassId   String?
+  academicClass     AcademicClass?   @relation(fields: [academicClassId], references: [id])
+  batchId           String?
+  batch             Batch?           @relation(fields: [batchId], references: [id])
+  batches           String? // to store multiple batch names if needed, or we can use JSON/array, let's keep string for simplicity 
+  academicSubjectId String?
+  academicSubject   AcademicSubject? @relation(fields: [academicSubjectId], references: [id])
+  examCategoryId    String?
+  examCategory      ExamCategory?    @relation(fields: [examCategoryId], references: [id])
+  date              DateTime
+  showMarksTitle    Boolean          @default(true)
+  hasMcq            Boolean          @default(false)
+  hasCq             Boolean          @default(false)
+  hasWritten        Boolean          @default(false)
+  totalMark         Float            @default(0)
+  mcqMark           Float            @default(0)
+  cqMark            Float            @default(0)
+  writtenMark       Float            @default(0)
+  status            String           @default("UNPUBLISHED") // PUBLISHED, UNPUBLISHED
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  results         ExamResult[]
+  Course          Course?        @relation(fields: [courseId], references: [id])
+  courseId        String?
+  AcademicGroup   AcademicGroup? @relation(fields: [academicGroupId], references: [id])
+  academicGroupId String?
 }
 
 model ExamResult {
   id     String @id @default(uuid())
   examId String
   userId String
-  marks  Float
+
+  mcqMarks     Float @default(0)
+  cqMarks      Float @default(0)
+  writtenMarks Float @default(0)
+  totalMarks   Float @default(0)
+
+  isPresent Boolean @default(true)
 
   exam Exam @relation(fields: [examId], references: [id])
   user User @relation(fields: [userId], references: [id])
@@ -166,37 +288,42 @@ model ExamResult {
   @@unique([examId, userId])
 }
 
-model TeamMember {  
-  id        String   @id @default(uuid())  
-  name      String  
-  role      String  
-  imageUrl  String?  
-  phone     String?  
-  facebook  String?  
+enum ExamType {
+  MONTHLY
+  MODEL_TEST
+}
+
+model TeamMember {
+  id        String   @id @default(uuid())
+  name      String
+  role      String
+  imageUrl  String?
+  phone     String?
+  facebook  String?
   instagram String?
   whatsapp  String?
   twitter   String?
   linkedin  String?
   bio       String?
-  order     Int      @default(0)  
-  createdAt DateTime @default(now())  
-} 
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
 
-model GalleryImage {  
-  id        String   @id @default(uuid())  
-  imageUrl  String  
-  createdAt DateTime @default(now())  
-}  
+model GalleryImage {
+  id        String   @id @default(uuid())
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
 
 model AdmissionRequest {
-  id               String   @id @default(uuid())
-  photoUrl         String?
-  studentClass     String
-  selectedBatch    String
-  studentName      String
-  studentNickname  String?
-  advisorName      String?
-  advisorMobile    String?
+  id              String  @id @default(uuid())
+  photoUrl        String?
+  studentClass    String
+  selectedBatch   String
+  studentName     String
+  studentNickname String?
+  advisorName     String?
+  advisorMobile   String?
 
   fatherName       String
   motherName       String
@@ -214,34 +341,34 @@ model AdmissionRequest {
   religion         String?
   studentMobile    String
   guardianMobile   String?
+  whatsapp         String?
   schoolName       String
   schoolRoll       String?
   subject          String?
-  examsOnly        Boolean  @default(false)
+  examsOnly        Boolean @default(false)
 
-  admissionFee     Float    @default(700)
-  paymentMethod    String
-  transactionId    String
-  signatureUrl     String?
-  
-  status           String   @default("PENDING") // PENDING, APPROVED, REJECTED
-  createdAt        DateTime @default(now())
+  admissionFee  Float   @default(700)
+  paymentMethod String
+  transactionId String
+  signatureUrl  String?
+
+  status    String   @default("PENDING") // PENDING, APPROVED, REJECTED
+  createdAt DateTime @default(now())
 }
 
-  
-model Setting {  
-  key       String   @id  
-  value     String  
-  updatedAt DateTime @updatedAt  
-} 
-  
-model Slider {  
-  id        String   @id @default(cuid())  
-  imageUrl  String  
-  link      String?  
-  isActive  Boolean  @default(true)  
-  createdAt DateTime @default(now())  
-  updatedAt DateTime @updatedAt  
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+model Slider {
+  id        String   @id @default(cuid())
+  imageUrl  String
+  link      String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Testimonial {
@@ -254,16 +381,150 @@ model Testimonial {
 }
 
 model Category {
-  id String @id @default(uuid())
-  name String @unique
-  imageUrl String?
+  id        String   @id @default(uuid())
+  name      String   @unique
+  imageUrl  String?
   createdAt DateTime @default(now())
 }
 
 model Album {
-  id String @id @default(uuid())
-  title String
-  content String
-  images String[]
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  images    String[]
   createdAt DateTime @default(now())
+}
+
+model AcademicClass {
+  attendanceSessions AttendanceSession[]
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  batches   Batch[]
+  exams     Exam[]
+  courses   Course[]
+}
+
+model AcademicGroup {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  batches   Batch[]
+  exams     Exam[]
+  courses   Course[]
+}
+
+model AcademicSubject {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  batches   Batch[]
+  exams     Exam[]
+  courses   Course[]
+}
+
+model FeeCategory {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ExamCategory {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  exams       Exam[]
+}
+
+
+model Conversation {
+  id        String    @id @default(uuid())
+  name      String
+  phone     String
+  subject   String
+  status    String    @default("OPEN") // OPEN, CLOSED
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  senderType     String       // STUDENT, ADMIN
+  content        String       @db.Text
+  createdAt      DateTime     @default(now())
+}
+
+
+model AttendanceSession {
+  id           String   @id @default(uuid())
+  title        String
+  classId      String
+  academicClass AcademicClass @relation(fields: [classId], references: [id])
+  batchId      String
+  batch        Batch         @relation(fields: [batchId], references: [id])
+  date         DateTime
+  startTime    String?
+  endTime      String?
+  subjects     String
+  totalStudent Int    @default(0)
+  totalPresent Int    @default(0)
+  totalAbsent  Int    @default(0)
+  totalLate    Int    @default(0)
+  totalLeave   Int    @default(0)
+  records      AttendanceRecord[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model AttendanceRecord {
+  id          String   @id @default(uuid())
+  sessionId   String
+  session     AttendanceSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     User              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  status      String   @default("PRESENT") // PRESENT, ABSENT, LATE, LEAVE
+  comment     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([sessionId, studentId])
+}
+
+model NotificationCategory {
+  id              String   @id @default(uuid())
+  bnName          String
+  enName          String?
+  color           String   @default("blue")
+  icon            String   @default("fa-bell")
+  defaultTemplate String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  notifications Notification[]
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  categoryId  String
+  type        String   @default("REGULAR") // REGULAR, IMPORTANT
+  status      String   @default("DRAFT")   // DRAFT, PUBLISHED
+  
+  targetType  String   @default("ALL")     // ALL, CLASS, BATCH, GROUP
+  targetId    String?                      // Specific class name, batch name, etc.
+
+  sentCount   Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category    NotificationCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }

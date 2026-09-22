@@ -37,9 +37,9 @@ export default function CourseCategories() {
             <Link 
               href={`/courses?category=${encodeURIComponent(cat.name)}`}
               key={cat.id}
-              className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white rounded-[20px] p-4 shadow-xl border border-gray-100 hover:border-red-200 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 group block"
+              className="w-[85vw] sm:w-auto shrink-0 snap-center bg-white/80 backdrop-blur-xl rounded-[24px] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 hover:border-red-300 hover:shadow-[0_20px_40px_rgba(220,38,38,0.1)] hover:-translate-y-2 hover:-translate-y-1 transition-all duration-300 group block"
             >
-              <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative mb-5 bg-gray-50">
+              <div className="w-full aspect-[16/9] rounded-xl overflow-hidden relative mb-5 bg-gradient-to-br from-red-50 to-white border border-red-100/50">
                 {cat.imageUrl ? (
                   <img 
                     src={cat.imageUrl} 

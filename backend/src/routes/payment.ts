@@ -3,82 +3,116 @@ import prisma from '../prismaClient';
 
 const router = Router();
 
-// Get all payments (with filters)
+// GET fees (Receive, History, Due depending on filters)
 router.get('/', async (req, res) => {
   try {
-    const statusFilter = req.query.status as string;
-    
-    let whereClause = {};
-    if (statusFilter && statusFilter !== 'ALL') {
-      whereClause = { status: statusFilter };
+    const { status, studentId, batchId, search, start, end } = req.query;
+    const where: any = {};
+
+    if (status && status !== 'ALL') where.status = status;
+    if (studentId) where.userId = String(studentId);
+    if (batchId) where.enrollment = { batchId: String(batchId) };
+
+    if (start || end) {
+      where.createdAt = {};
+      if (start) where.createdAt.gte = new Date(String(start));
+      if (end) where.createdAt.lte = new Date(String(end));
+    }
+
+    if (search) {
+      where.user = {
+        OR: [
+          { name: { contains: String(search), mode: 'insensitive' } },
+          { phone: { contains: String(search) } }
+        ]
+      };
     }
 
     const payments = await prisma.payment.findMany({
-      where: whereClause,
-      include: { 
-        user: true,
+      where,
+      include: {
+        user: { select: { id: true, name: true, phone: true, photoUrl: true } },
         enrollment: {
-          include: {
-            batch: {
-              include: { course: true }
-            }
-          }
+          include: { batch: { select: { name: true, courseFee: true, admissionFee: true, tuitionFee: true } } }
         }
       },
       orderBy: { createdAt: 'desc' }
     });
+
     res.json(payments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// GET users with active enrollments (for receiving fee)
+router.get('/students', async (req, res) => {
+  try {
+    const { search } = req.query;
+    const where: any = { role: 'STUDENT', enrollments: { some: { status: 'ACTIVE' } } };
+    
+    if (search) {
+      where.OR = [
+        { name: { contains: String(search), mode: 'insensitive' } },
+        { phone: { contains: String(search) } }
+      ];
+    }
+
+    const students = await prisma.user.findMany({
+      where,
+      select: {
+        id: true, name: true, phone: true, photoUrl: true,
+        enrollments: {
+          where: { status: 'ACTIVE' },
+          include: { batch: true }
+        }
+      },
+      take: 20
+    });
+    res.json(students);
   } catch (error) {
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Create a new payment (due or paid)
+// POST - Receive/Collect Fee
 router.post('/', async (req, res) => {
-  const { userId, enrollmentId, amount, month, status } = req.body;
+  const { userId, enrollmentId, amount, month, method, note } = req.body;
   try {
     const payment = await prisma.payment.create({
-      data: { 
-        userId, 
+      data: {
+        userId,
         enrollmentId,
-        amount: parseFloat(amount), 
-        month, 
-        status 
+        amount: parseFloat(amount),
+        month: month || null,
+        method: method || 'CASH',
+        note: note || null,
+        status: 'PAID', // Directly paid if received here
       },
       include: {
         user: true,
-        enrollment: { include: { batch: { include: { course: true } } } }
+        enrollment: { include: { batch: true } }
       }
     });
-    res.json(payment);
+    res.json({ success: true, payment });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
-// Update payment status (Mark as PAID)
-router.put('/:id/status', async (req, res) => {
+// CANCEL payment
+router.put('/:id/cancel', async (req, res) => {
   const { id } = req.params;
-  const { status } = req.body; // e.g., 'PAID'
   try {
     const payment = await prisma.payment.update({
       where: { id },
-      data: { status }
+      data: { status: 'CANCELED', cancelledAt: new Date() }
     });
-    res.json(payment);
+    res.json({ success: true, payment });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update payment status' });
-  }
-});
-
-// Delete a payment
-router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await prisma.payment.delete({ where: { id } });
-    res.json({ success: true });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to delete payment' });
+    res.status(500).json({ error: 'Failed to cancel payment' });
   }
 });
 

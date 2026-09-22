@@ -19,11 +19,11 @@ export default function Courses() {
 
     Promise.all([
       axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/courses`),
-      axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/categories`)
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL || `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}`}/api/academic/classes`)
     ])
-      .then(([coursesRes, categoriesRes]) => {
+      .then(([coursesRes, classesRes]) => {
         setCourses(coursesRes.data);
-        setCategories(categoriesRes.data);
+        setCategories(classesRes.data);
       })
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
@@ -31,7 +31,7 @@ export default function Courses() {
 
   const filteredCourses = activeCategory === 'ALL' 
     ? courses 
-    : courses.filter(c => c.category === activeCategory);
+    : courses.filter(c => c.academicClassId === activeCategory || c.category === activeCategory);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -65,9 +65,9 @@ export default function Courses() {
             {categories.map(cat => (
               <button
                 key={cat.id}
-                onClick={() => setActiveCategory(cat.name)}
+                onClick={() => setActiveCategory(cat.id)}
                 className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
-                  activeCategory === cat.name 
+                  (activeCategory === cat.id || activeCategory === cat.name)
                     ? 'bg-red-600 text-white shadow-md shadow-red-600/30' 
                     : 'bg-white text-gray-700 border border-gray-200 hover:border-red-300 hover:text-red-600 hover:bg-red-50'
                 }`}
@@ -79,8 +79,8 @@ export default function Courses() {
         </div>
       </div>
 
-      {/* Dark Red Gradient Section for Courses Grid */}
-      <div className="flex-1 bg-gradient-to-b from-red-800 via-red-900 to-red-950 border-y border-red-900/30 py-16">
+      {/* Light Section for Courses Grid (Matching Home) */}
+      <div className="flex-1 bg-[#fef9f9] py-16">
         <div className="max-w-[1450px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Courses Grid */}
           {loading ? (
@@ -88,60 +88,125 @@ export default function Courses() {
               <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-red-600"></div>
             </div>
           ) : filteredCourses.length === 0 ? (
-            <div className="text-center py-20 bg-white/5 backdrop-blur-md rounded-[20px] shadow-sm border border-white/10">
-              <i className="fa-solid fa-book-open text-5xl text-gray-500 mb-4"></i>
-              <h3 className="text-xl font-bold text-gray-400">কোনো কোর্স পাওয়া যায়নি</h3>
-              <p className="text-gray-500 mt-2">শীঘ্রই নতুন কোর্স যুক্ত করা হবে।</p>
+            <div className="text-center py-20 bg-white rounded-[20px] shadow-sm border border-gray-100">
+              <i className="fa-solid fa-book-open text-5xl text-gray-300 mb-4"></i>
+              <h3 className="text-xl font-bold text-gray-500">কোনো কোর্স পাওয়া যায়নি</h3>
+              <p className="text-gray-400 mt-2">অন্য কোনো ক্যাটাগরি সিলেক্ট করুন</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-              {filteredCourses.map(course => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
+              {filteredCourses.map((course) => (
                 <div 
                   key={course.id} 
-                  className="flex flex-col w-full bg-white/5 backdrop-blur-md rounded-[20px] p-4 shadow-2xl border border-white/10 hover:border-red-500/40 hover:bg-gradient-to-b hover:from-white/10 hover:to-red-900/30 transform hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(220,38,38,0.2)] transition-all duration-500 group relative overflow-hidden"
+                  className="flex flex-col bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-gray-100 hover:shadow-[0_10px_30px_rgba(220,38,38,0.1)] hover:-translate-y-1 transition-all duration-300 group max-w-[340px] mx-auto w-full md:max-w-none"
                 >
-                  {/* Glowing orb effect on hover inside card */}
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-red-500/20 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-                  <div className="h-56 rounded-xl bg-black/20 flex items-center justify-center relative overflow-hidden shrink-0 mb-4 z-10 border border-white/5 group-hover:border-red-500/20 transition-colors">
-                    {course.imageUrl ? (
-                      <img src={course.imageUrl} alt={course.title} className="w-full h-full object-fill group-hover:scale-105 transition-transform duration-700" />
-                    ) : (
-                      <span className="text-white/30 font-bold">[Course Banner]</span>
-                    )}
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1a0101] via-transparent to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-500"></div>
+                  {/* Top Banner Area (Rich Gradient + Texture) */}
+                  <div className="h-48 md:h-[220px] bg-gradient-to-br from-[#e60000] via-[#cc0000] to-[#8a0000] flex flex-col items-center justify-center p-3 relative overflow-hidden">
                     
-                    {/* Price Tag Overlay */}
-                    <div className="absolute top-3 right-3 bg-red-600/90 backdrop-blur-md shadow-lg px-4 py-1.5 rounded-full font-black text-white text-sm border border-red-400/30">
-                      ৳ {course.fee}
+                    {/* Dot Grid Texture */}
+                    <div 
+                      className="absolute inset-0 opacity-[0.15] mix-blend-overlay" 
+                      style={{ backgroundImage: 'radial-gradient(circle, #fff 1.5px, transparent 1.5px)', backgroundSize: '18px 18px' }}
+                    ></div>
+                    
+                    {/* Lighting Glow */}
+                    <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/20 blur-3xl rounded-full pointer-events-none"></div>
+
+                    {/* Background Watermark Icon */}
+                    <i className="fa-solid fa-book-open absolute -bottom-4 -right-4 text-white/5 text-[8rem] md:text-[9rem] rotate-[15deg] pointer-events-none transition-transform duration-500 group-hover:rotate-[10deg] group-hover:scale-110"></i>
+
+                    {/* Book Image(s) */}
+                    <div className="flex flex-row items-center justify-center gap-3 mb-3 z-10 group-hover:-translate-y-1 transition-all duration-300">
+                      {(() => {
+                        let images: string[] = [];
+                        
+                        if (course.description) {
+                          try {
+                            const parsed = JSON.parse(course.description);
+                            if (parsed.subjects && parsed.subjects.length > 0) {
+                              images = parsed.subjects.map((s: any) => s.imageUrl).filter(Boolean);
+                            }
+                          } catch (e) { }
+                        }
+                        
+                        if (images.length === 0 && course.imageUrl) {
+                          if (course.imageUrl.startsWith('data:image')) {
+                            images = [course.imageUrl];
+                          } else {
+                            images = course.imageUrl.split(',').slice(0, 2);
+                          }
+                        }
+
+                        if (images.length === 0) {
+                          return (
+                            <div className="w-24 h-32 sm:w-28 sm:h-36 bg-white/10 rounded shadow-inner mb-3 flex flex-col items-center justify-center backdrop-blur-sm">
+                              <i className="fa-solid fa-book-open-reader text-2xl text-white/80"></i>
+                            </div>
+                          );
+                        }
+
+                        return images.slice(0, 2).map((imgUrl: string, idx: number) => {
+                          const cleanUrl = imgUrl.trim();
+                          const fullUrl = cleanUrl.startsWith('http') || cleanUrl.startsWith('data:') 
+                            ? cleanUrl 
+                            : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}${cleanUrl.startsWith('/') ? '' : '/'}${cleanUrl}`;
+                          return (
+                            <img 
+                              key={idx}
+                              src={fullUrl} 
+                              alt={course.title} 
+                              className="w-20 h-28 sm:w-24 sm:h-32 object-cover rounded shadow-lg group-hover:shadow-xl transition-shadow duration-300" 
+                            />
+                          );
+                        });
+                      })()}
                     </div>
+                    
+                    {/* Pill Badge */}
+                    <span className="z-10 bg-[#990000] text-white text-[11px] md:text-xs font-bold px-4 py-1.5 rounded-full shadow-sm">
+                      {course.fee ? `৳ ${course.fee}` : 'Course Info'}
+                    </span>
                   </div>
                   
-                  <div className="flex flex-col flex-1 z-10 px-1">
-                    <h3 className="text-2xl font-black text-white mb-3 line-clamp-2 leading-snug group-hover:text-red-400 transition-colors drop-shadow-sm">
+                  {/* Content Area (Compacted) */}
+                  <div className="p-4 md:p-5 flex flex-col flex-1">
+                    <h3 className="text-xl md:text-[22px] font-black text-gray-900 mb-1.5 leading-tight">
                       {course.title}
                     </h3>
                     
-                    <div className="text-gray-300 text-sm mb-6 flex-1 overflow-hidden">
+                    <div className="text-gray-600 text-[13px] md:text-sm mb-4 flex-1 mt-1.5">
                       <div 
-                        className="line-clamp-3 leading-relaxed editor-content [&_*]:!bg-transparent [&_p]:!text-gray-200 [&_span]:!text-gray-200 [&_li]:!text-gray-200 [&>h1]:!text-red-400 [&>h1]:text-lg [&>h1]:font-bold [&>h2]:!text-red-400 [&>h2]:text-base [&>h2]:font-bold [&>h3]:!text-red-400 [&>p]:mb-2 [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&_strong]:!text-white [&_strong]:font-black [&>em]:italic"
-                        dangerouslySetInnerHTML={{ __html: course.description || "এই কোর্সটি সম্পর্কে আরও বিস্তারিত জানতে ক্লিক করুন।" }}
+                        className="leading-relaxed editor-content space-y-1 [&_*]:!bg-transparent [&_p]:!text-gray-600 [&_span]:!text-gray-600 [&_li]:!text-gray-600 [&>h1]:!text-red-600 [&>h1]:text-[16px] [&>h1]:font-bold [&>h2]:!text-red-600 [&>h2]:text-[18px] md:[&>h2]:text-[20px] [&>h2]:font-bold [&>h3]:!text-red-600 [&>p]:mb-1 [&>ul]:list-none [&>ul]:mt-1.5 [&>ul>li]:relative [&>ul>li]:pl-4 [&>ul>li]:mb-1 [&>ul>li::before]:content-[''] [&>ul>li::before]:absolute [&>ul>li::before]:left-0 [&>ul>li::before]:top-1.5 [&>ul>li::before]:w-1.5 [&>ul>li::before]:h-1.5 [&>ul>li::before]:bg-red-500 [&>ul>li::before]:rounded-full [&>ol]:list-decimal [&>ol]:pl-4 [&_strong]:!text-gray-900 [&_strong]:font-black [&>em]:italic"
+                        dangerouslySetInnerHTML={{ 
+                          __html: (() => {
+                            if (!course.description) return "বিস্তারিত জানতে ক্লিক করুন";
+                            try {
+                              const parsed = JSON.parse(course.description);
+                              if (parsed.subtitle || parsed.points) {
+                                let html = '';
+                                if (parsed.subtitle) html += `<h2>${parsed.subtitle}</h2>`;
+                                if (parsed.points && parsed.points.length > 0) {
+                                  html += `<ul>${parsed.points.map((p: string) => `<li>${p}</li>`).join('')}</ul>`;
+                                }
+                                return html;
+                              }
+                            } catch (e) {
+                              // HTML fallback
+                            }
+                            return course.description;
+                          })() 
+                        }}
                       />
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="mt-auto pt-4 border-t border-white/10 relative">
-                      <div className="grid grid-cols-2 gap-3">
-                        <Link href={`/courses/${course.id}`} className="flex items-center justify-center w-full bg-white/5 border border-white/10 text-white py-3 rounded-xl font-bold hover:bg-white/10 hover:border-white/20 transition-all">
-                          বিস্তারিত
-                        </Link>
-                        <Link href="/admission" className="flex items-center justify-center w-full bg-gradient-to-r from-red-600 to-red-500 text-white py-3 rounded-xl font-black hover:from-red-700 hover:to-red-600 transition shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:shadow-[0_0_20px_rgba(220,38,38,0.5)] group/btn">
-                          ভর্তি হোন 
-                        </Link>
-                      </div>
-                      {/* Glowing line on card hover */}
-                      <div className="h-1 w-0 group-hover:w-full bg-gradient-to-r from-red-500 to-red-400 mt-5 mx-auto rounded-full transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 absolute -bottom-5 left-0"></div>
+                    <div className="mt-auto flex flex-row gap-3 pt-3 border-t border-gray-100">
+                      <Link href={`/routine?courseId=${course.id}`} className="flex-1 flex items-center justify-center border border-red-200 text-red-600 bg-white py-2.5 rounded-lg text-sm font-bold hover:bg-red-50 hover:border-red-300 transition-colors">
+                        রুটিন দেখুন
+                      </Link>
+                      <Link href={`/admission?courseId=${course.id}`} className="flex-1 flex items-center justify-center bg-red-600 text-white py-2.5 rounded-lg text-sm font-bold hover:bg-red-700 transition-colors shadow-md shadow-red-500/20 group/btn">
+                        ভর্তি হোন <i className="fa-solid fa-chevron-right ml-1.5 text-xs transition-transform group-hover/btn:translate-x-1"></i>
+                      </Link>
                     </div>
                   </div>
                 </div>
